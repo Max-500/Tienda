@@ -25,7 +25,7 @@ const connection = require('./BDD/bdd');
 const { name } = require('ejs');
 
 app.get('/', (req, res) => {
-    res.render(__dirname + '/vistas/login')
+    res.render(__dirname + '/vistas/registro')
 })
 
 app.post('/login', (req, res) => {
