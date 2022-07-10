@@ -24,20 +24,50 @@ app.use(session({
 const connection = require('./BDD/bdd');
 const { name } = require('ejs');
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    res.render(__dirname + '/vistas/inicio')
+})
+
+app.get('/registro', async (req, res) => {
     res.render(__dirname + '/vistas/registro')
 })
 
-app.post('/login', (req, res) => {
-    req.session.name = req.body.user
-    req.session.password = req.body.password
-    connection.query('SELECT * FROM usuarios WHERE nombre = ?', req.session.name, async (error, resultados) => {
-        for (i = 0; i < resultados.lenght; i++) {
-            let booleano = (req.session.password == resultados[0].contrasena);
-            if (booleano == true) {
-                i = resultados.lenght
-                let repetido = true
-            }
+
+app.get('/login', async (req, res) => {
+    res.render(__dirname + '/vistas/login')
+})
+
+app.get('/menu', async (req, res) => {
+    res.render(__dirname + '/vistas/menu')
+})
+
+app.post('/login', async (req, res) => {
+    const name = req.body.user
+    const matricula = req.body.matricula
+    const password = req.body.password
+    connection.query('INSERT INTO usuarios SET ?', { nombre: name, matricula: matricula, contrasena: password }, async (error, results) => {
+        if (error)
+            res.render(__dirname + '/vistas/inicio')
+        else
+            res.render(__dirname + '/vistas/login')
+    })
+})
+
+app.post('/menu', (req, res) => {
+    let arreglo = new Array;
+    const nombre = req.body.nombre
+    const matricula = req.body.matricula
+    const password = req.body.password
+    //const queryUpdate = "UPDATE `usuario` SET dinero=" + dineroF + ' WHERE name= "' + name + '"';
+    connection.query('SELECT * FROM usuarios WHERE matricula = ?', matricula, async (error, results) => {
+        arreglo = results
+        console.log(arreglo)
+        if(arreglo.length == []){
+            res.render(__dirname + '/vistas/login')
+        }else if(arreglo.length == 1 && arreglo[0].nombre == nombre && arreglo[0].contrasena == password){
+            res.render(__dirname + '/vistas/menu')
+        }else{
+            res.render(__dirname + '/vistas/login')
         }
     })
 })

@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="es-mx">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/publico/css/style.css">
-    <title>Registro</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/publico/css/registro.css">
+  <title>Login</title>
 </head>
+
 <body>
-    <div class="contenedor">
-      <img src="/publico/imagenes/login/logotipo.png" class="avatar" alt="Avatar Image">
-      <h1>Registros</h1>
-      <form action="/login" method="POST">
+  <div class="contenedor">
+    <div class="-xs-10 col-sm-4 col-md-6">
+      <img src="/publico/imagenes/login/logotipOf.png" class="avatar" alt="Avatar Image">
+      <h1>Inicio de Sesión</h1>
+      <form action="/menu" method="POST">
         <!-- INPUT  NOMBRE DE USUARIO-->
         <label for="username">Nombre de usuario</label>
-        <input type="text" placeholder="Ingrese Nombre de usuario" name="user" required>
+        <input type="text" placeholder="Ingrese nombre de usuario" name="nombre">
+        <label for="username">Matricula</label>
+        <input type="text" placeholder="Ingrese su matricula" name="matricula">
         <!-- INPUT CONTRASEÑA -->
         <label for="password">Contraseña</label>
-        <input type="password" placeholder="Ingrese Contraseña" name="password" required>
-
-        <input type="submit" value="Registrarse">
-        <a href="#" onclick="prueba()">Olvidaste tu contraseña?</a>
+        <input type="password" placeholder="Ingrese contraseña" name="password">
+        <input type="submit" value="Ingresar">
+        <input type="button" value="Registrarse" onclick="registro()">
       </form>
     </div>
-    <script>
-        function prueba(){
-            alert('Mensaje Provisional');
-        }
-    </script>
+  </div>
 </body>
+<script>
+    function registro(){
+            setTimeout(function (){
+                window.location='/registro'
+            }, 5000)
+        }
+</script>
 </html>

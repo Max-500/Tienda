@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: url(/publico/imagenes/login/logotipOf.png) no-repeat center top;
+    background-size: cover;
+    font-family: sans-serif;
+    height: 100vh;
+  }
+  
+  h1 {
+    margin: 0;
+  }
+  
+  .contenedor {
+    width: 320px;
+    height: 420px;
+    background: rgb(244, 222, 174);
+    color: rgb(7, 7, 7);
+    top: 50%;
+    left: 50%;
+    border-radius: 15px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+  }
+  
+  .contenedor .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: calc(50% - 50px);
+    opacity: 20;
+  }
+  
+  .contenedor h1 {
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+    opacity: 1;
+  }
+  
+  .contenedor label {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    display: block;
+    text-align: left;
+    opacity: 1;
+  }
+  
+  .contenedor input {
+    width: 100%;
+    margin-bottom: 12px;
+    opacity: 1;
+  }
+  
+  .contenedor input[type="text"],
+  .contenedor input[type="password"] {
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+    opacity: 1;
+  }
+  
+  .contenedor input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 35px;
+    background: #e98025;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+    opacity: 1;
+  }
+  
+  .contenedor input[type="submit"]:hover {
+    cursor: pointer;
+    background: #fc9610;
+    color: #000;
+    opacity: 1;
+  }
+  
+  .contenedor a {
+    margin-top: 50px;
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 20px;
+    color: darkgrey;
+    opacity: 1;
+  }
+  
+  .contenedor a:hover {
+    color: #fff;
+    opacity: 1;
+  }
