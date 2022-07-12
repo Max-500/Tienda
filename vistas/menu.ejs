@@ -1,1 +1,34 @@
 <h1>Soy menu</h1>
+<input type="number" id="matricula">
+<button onclick="btnBuscar()">Buscar</button>
+
+<label for="nombre" id="nombre" name="nombre"></label>
+<label for="contra" id="contra" name="contra"></label>
+
+<script>
+    const url = "http://localhost:3000/";
+    function btnBuscar() {
+        const matricula = document.getElementById('matricula').value;
+
+        fetch(`${url}menu_api?matricula=${matricula}`, {
+            method: 'GET'
+        })
+            .then(res => res.json()
+            )
+            .then(response => {
+                if (JSON.stringify(response.redirect != null)) {
+                    document.querySelector('#nombre').innerHTML = JSON.stringify(response.redirect[0].nombre)
+                    document.querySelector('#contra').innerHTML = JSON.stringify(response.redirect[0].contrasena)
+                    //window.location = '/'
+                } else {
+                    document.querySelector('#nombre').innerHTML = "No hay datos";
+                    alert('No hay datos')
+                }
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+
+
+</script>
