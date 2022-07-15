@@ -9,7 +9,13 @@
     const url = "http://localhost:3000/";
     function btnBuscar() {
         const matricula = document.getElementById('matricula').value;
-
+        alert(matricula)
+        console.log(matricula)
+        if(matricula == ""){
+            alert('Soy nulo')
+        }else{
+            alert('Tengo datos')
+        }
         fetch(`${url}menu_api?matricula=${matricula}`, {
             method: 'GET'
         })

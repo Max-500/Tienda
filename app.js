@@ -1,6 +1,11 @@
 const express = require('express');
 const app = express();
 
+//
+const bodyParser= require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -9,6 +14,8 @@ dotenv.config({ path: './Variables_Entorno/.env' });
 
 app.use('/publico', express.static('publico'));
 app.use('/publico', express.static(__dirname + '/publico'));
+
+//
 
 app.set('view engine', 'ejs');
 
@@ -60,6 +67,7 @@ app.post('/login', async (req, res) => {
 })
 */
 app.get('/menu_api', (req, res) => {
+    const nombre = req.query.nombre
     const matricula = req.query.matricula
 
     connection.query(`SELECT * FROM usuarios WHERE matricula = ${matricula} `, async (error, results) => {
@@ -71,18 +79,51 @@ app.get('/menu_api', (req, res) => {
         }
     })
 });
+/*
 
+*/
 app.get('/login_api', (req, res) => {
+    console.log('Soy el metodo login')
     const nombre = req.query.nombre
     const matricula = req.query.matricula
-    const password = req.query.password
+    const password = req.query.contrasena
+    console.log(nombre)
+    console.log(matricula)
+    console.log(password)
     // && matricula = ${matricula} && contrasena = ${password}"
-    connection.query(`SELECT * FROM usuarios WHERE nombre = "${nombre}";`, async (error, results) => {
+    connection.query(`SELECT * FROM usuarios WHERE nombre = "${nombre}" && matricula = ${matricula} && contrasena = ${password};`, async (error, results) => {
         console.log('Entro')
         //console.log(results[0])
         if (results.length > 0) {
+            console.log('verdadero')
             res.send({ redirect: results })
         } else {
+            console.log('falso')
+            res.send({ redirect: {"results": ""} });
+        }
+    })
+});
+
+app.get('/registro_api', (req, res) => {
+    console.log('Soy el metodo registro')
+    const nombre = req.query.nombre
+    const matricula = req.query.matricula
+    const pass = req.query.contrasena
+   //const password = req.query.password
+    console.log(nombre)
+    console.log(matricula)
+    console.log(pass);
+    // && matricula = ${matricula} && contrasena = ${password}"
+    // INSERT INTO `usuarios`(`nombre`, `matricula`, `contrasena`) VALUES ('Prueba1', 0000, 1234)
+    connection.query(`INSERT INTO usuarios(nombre, matricula, contrasena) VALUES ("${nombre}", ${matricula}, ${pass});`, async (error, results) => {
+        console.log(results)
+        console.log(error)
+        //console.log(results[0])
+        if (error == null) {
+            console.log('verdadero')
+            res.send({ redirect: results })
+        } else {
+            console.log('falso')
             res.send({ redirect: {"results": ""} });
         }
     })
