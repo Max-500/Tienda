@@ -1,40 +1,78 @@
 <!DOCTYPE html>
 <html lang="es-mx">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/publico/css/eliminar.css">
-    <title>Eliminar productos</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/publico/css/eliminar.css">
+  <title>Eliminar productos</title>
 </head>
+
 <body>
-    <div class="container">  
-        <form id="contact" action="" method="post">
-          <center><h2>SISTEMA ABARROTERO</h3></center>
-          <br>
-          <fieldset>
-            <input placeholder="Nombre del producto" type="text" tabindex="1" required autofocus>
-          </fieldset>
-          <fieldset>
-            <input placeholder="Cantidad" type="text" tabindex="2" required>
-          </fieldset>
-          <fieldset>
-            <input placeholder="Precio" type="text" tabindex="3" required>
-          </fieldset>
-          <fieldset>
-            <input placeholder="Marca" type="text" tabindex="4" required>
-          </fieldset>
-          <fieldset>
-            <button name="Eliminar" type="button" id="contact-submit">ELIMINAR</button>
-          </fieldset>
-          <fieldset>
-            <a href="/menu">
-            <button name="Eliminar" type="button" id="contact-submit">REGRESAR A MENÚ</button>
-            </a>
-          </fieldset>
-        </form>
-       
-        
-      </div>
+  <div class="container">
+    <form id="contact">
+      <center>
+        <h2>SISTEMA ABARROTERO</h3>
+      </center>
+      <br>
+      <fieldset>
+        <input placeholder="Nombre del producto" type="text" tabindex="1" required autofocus id="nombre">
+      </fieldset>
+      <fieldset>
+        <input placeholder="Cantidad" type="text" tabindex="2" required id="cantidad">
+      </fieldset>
+      <fieldset>
+        <input placeholder="Precio" type="text" tabindex="3" required id="precio">
+      </fieldset>
+      <fieldset>
+        <input placeholder="Marca" type="text" tabindex="4" required id="marca">
+      </fieldset>
+      <fieldset>
+        <button name="Eliminar" type="button" id="contact-submit" onclick="eliminar()">ELIMINAR</button>
+      </fieldset>
+      <fieldset>
+        <a href="/menu">
+          <button name="Eliminar" type="button" id="contact-submit">REGRESAR A MENÚ</button>
+        </a>
+      </fieldset>
+    </form>
+  </div>
 </body>
+<script>
+  function eliminar() {
+    alert('Soy el metodo eliminar')
+    const url = "http://localhost:3000/";
+    let nombre = document.getElementById('nombre').value
+    let cantidad = document.getElementById('cantidad').value
+    let precio = document.getElementById('precio').value
+    let marca = document.getElementById('marca').value
+    if (nombre != "" && cantidad != "" && precio != "" && marca != "") {
+      alert('Entro')
+      fetch(`${url}eliminar_api?nombre=${nombre}&&cantidad=${cantidad}&&precio=${precio}&&marca=${marca}`, {
+        method: 'GET'
+      })
+        .then(res => res.json()
+        )
+        .then(response => {
+          const status = response["status"];
+
+          if (status) {
+            alert('Se elimino perfectamente')
+            window.location = '/menuP'
+          } else {
+            alert('No se pudo realizar la eliminacion')
+            window.location = '/eliminar'
+          }
+        })
+        .catch(function (error) {
+          alert('Falla en el sistema')
+          console.log(error)
+        })
+    } else {
+      alert('No has ingresado datos')
+    }
+  }  
+</script>
+
 </html>

@@ -13,7 +13,7 @@
   <div class="contenedor">
     <img src="/publico/imagenes/registro/logotipo.png" class="avatar" alt="Avatar Image">
     <h1>Registros</h1>
-    <form action="/login" method="POST">
+    <form>
       <!-- INPUT  NOMBRE DE USUARIO-->
       <label for="username">Nombre de usuario</label>
       <input type="text" placeholder="Ingrese Nombre de usuario" name="user" id="nombre" required>
@@ -48,7 +48,7 @@
     if (pass == "") {
       pass = 1
     }
-    //&&matricula=${matricula}&&contrasena=${password}
+    
     fetch(`${url}registro_api?nombre=${nombre}&&matricula=${matricula}&&contrasena=${pass}`, {
       method: 'GET'
     })

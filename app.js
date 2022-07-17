@@ -67,7 +67,7 @@ app.get('/nosotros', async (req, res) => {
 })
 //
 app.get('/menuP', async (req, res) => {
-    res.render(__dirname + '/vistas/menu')
+    res.render(__dirname + '/vistas/menuPrincipal')
 })
 
 // Rutas para VISTAS FIN ----------------------------------------------------------------
@@ -131,6 +131,40 @@ app.get('/registro_api', (req, res) => {
         }
     })
 });
+
+app.get('/anadir_api', (req, res)=>{
+    const nombre = req.query.nombre
+    const cantidad = req.query.cantidad
+    const precio = req.query.precio
+    const marca = req.query.marca
+    connection.query(`SELECT * FROM almacen wHERE nombre = "${nombre}" && cantidad = ${cantidad};`, async (error, results)=>{
+        if(results.length > 0){
+            res.send({"status": false})
+        }else{
+            console.log('Entro')
+            connection.query(`INSERT INTO almacen(nombre, cantidad, precio, marca) VALUES ("${nombre}", ${cantidad}, ${precio}, "${marca}");`, async (err, resultados)=>{
+                res.send({"status": true})
+            })
+        }
+    })
+})
+
+app.get('/eliminar_api', (req, res)=>{
+    console.log('Soy el metodo eliminar')
+    const nombre = req.query.nombre
+    const cantidad = req.query.cantidad
+    const precio = req.query.precio
+    const marca = req.query.marca
+    console.log(nombre)
+    console.log(cantidad)
+    connection.query(`DELETE FROM almacen WHERE nombre = "${nombre}" && cantidad = ${cantidad};`, async (error, results)=>{
+        if(error == null){
+            res.send({"status": true})
+        }else{
+            res.send({"status": false})
+        }
+    })
+})
 
 // Rutas para APIS FINAL ----------------------------------------------------------------
 
