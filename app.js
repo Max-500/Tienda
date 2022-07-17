@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
+const arbol = require('./arbol');
 
 //
-const bodyParser= require('body-parser');
+const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -46,6 +47,26 @@ app.get('/login', async (req, res) => {
 })
 
 app.get('/menu', async (req, res) => {
+    res.render(__dirname + '/vistas/menuPrincipal')
+})
+
+app.get('/anadir', async (req, res) => {
+    res.render(__dirname + '/vistas/anadir')
+})
+
+app.get('/eliminar', async (req, res) => {
+    res.render(__dirname + '/vistas/eliminar')
+})
+
+app.get('/facturar', async (req, res) => {
+    res.render(__dirname + '/vistas/facturar')
+})
+
+app.get('/nosotros', async (req, res) => {
+    res.render(__dirname + '/vistas/nosotros')
+})
+//
+app.get('/menuP', async (req, res) => {
     res.render(__dirname + '/vistas/menu')
 })
 
@@ -54,19 +75,8 @@ app.get('/menu', async (req, res) => {
 
 // Rutas para APIS INICIO ----------------------------------------------------------------
 /*
-app.post('/login', async (req, res) => {
-    const name = req.body.user
-    const matricula = req.body.matricula
-    const password = req.body.password
-    connection.query('INSERT INTO usuarios SET ?', { nombre: name, matricula: matricula, contrasena: password }, async (error, results) => {
-        if (error)
-            res.render(__dirname + '/vistas/inicio')
-        else
-            res.render(__dirname + '/vistas/login')
-    })
-})
 */
-app.get('/menu_api', (req, res) => {
+app.get('/menuP_api', (req, res) => {
     const nombre = req.query.nombre
     const matricula = req.query.matricula
 
@@ -75,7 +85,7 @@ app.get('/menu_api', (req, res) => {
         if (results.length > 0) {
             res.send({ redirect: results })
         } else {
-            res.send({ redirect: {"results": ""} });
+            res.send({ redirect: { "results": "" } });
         }
     })
 });
@@ -99,32 +109,25 @@ app.get('/login_api', (req, res) => {
             res.send({ redirect: results })
         } else {
             console.log('falso')
-            res.send({ redirect: {"results": ""} });
+            res.send({ redirect: { "results": "" } });
         }
     })
 });
 
 app.get('/registro_api', (req, res) => {
-    console.log('Soy el metodo registro')
+
     const nombre = req.query.nombre
     const matricula = req.query.matricula
     const pass = req.query.contrasena
-   //const password = req.query.password
-    console.log(nombre)
-    console.log(matricula)
-    console.log(pass);
-    // && matricula = ${matricula} && contrasena = ${password}"
-    // INSERT INTO `usuarios`(`nombre`, `matricula`, `contrasena`) VALUES ('Prueba1', 0000, 1234)
+
     connection.query(`INSERT INTO usuarios(nombre, matricula, contrasena) VALUES ("${nombre}", ${matricula}, ${pass});`, async (error, results) => {
-        console.log(results)
-        console.log(error)
-        //console.log(results[0])
+
         if (error == null) {
             console.log('verdadero')
-            res.send({ redirect: results })
+            res.send({ "status": true })
         } else {
             console.log('falso')
-            res.send({ redirect: {"results": ""} });
+            res.send({ redirect: { "results": "" } });
         }
     })
 });

@@ -35,48 +35,39 @@
   }
   function registro() {
     const url = "http://localhost:3000/";
-    alert('Metodo Registro')
+
     let nombre = document.getElementById('nombre').value;
     if (nombre == "") {
       nombre = "L"
     }
-    alert(nombre)
     let matricula = document.getElementById('matricula').value;
     if (matricula == "") {
       matricula = 1
     }
-    alert(matricula)
-    alert('Paso')
     let pass = document.getElementById('pass').value;
     if (pass == "") {
       pass = 1
     }
-    alert(pass)
     //&&matricula=${matricula}&&contrasena=${password}
-    alert(`${url}registro_api?nombre=${nombre}&&matricula=${matricula}&&contrasena=${pass}`)
     fetch(`${url}registro_api?nombre=${nombre}&&matricula=${matricula}&&contrasena=${pass}`, {
       method: 'GET'
     })
       .then(res => res.json()
       )
       .then(response => {
-        if (JSON.stringify(response.redirect != null && response.redirect != undefined)) {
-          document.querySelector('#nombre').innerHTML = JSON.stringify(response.redirect[0].nombre)
-          document.querySelector('#contra').innerHTML = JSON.stringify(response.redirect[0].matricula)
-          document.querySelector('#pass').innerHTML = JSON.stringify(response.redirect[0].contrasena)
-          //alert('Soy Verdadero')
+        const status = response["status"];
+
+        if (status) {
           window.location = '/menu'
-        } else {
-          document.querySelector('#nombre').innerHTML = "No hay datos";
-          //alert('Soy falso')
+        }else{
           window.location = '/'
         }
       })
       .catch(function (error) {
         console.log(error)
-        //alert('Soy error')
         window.location = '/registro'
       })
   }
 </script>
+
 </html>
