@@ -62,16 +62,87 @@ app.get('/facturar', async (req, res) => {
     res.render(__dirname + '/vistas/facturar')
 })
 
+app.get('/factura2', async (req, res) => {
+    res.render(__dirname + '/vistas/factura2')
+})
+
 app.get('/nosotros', async (req, res) => {
     res.render(__dirname + '/vistas/nosotros')
 })
-//
+/*
 app.get('/menuP', async (req, res) => {
     res.render(__dirname + '/vistas/menuPrincipal')
+})
+*/
+app.get('/menuEjemplo', async (req, res) => {
+    res.render(__dirname + '/vistas/menuP')
+})
+
+app.get('/visualizar', async (req, res) => {
+    res.render(__dirname + '/vistas/visualizar')
 })
 
 // Rutas para VISTAS FIN ----------------------------------------------------------------
 
+
+class Tree {
+    constructor() {
+        this.value = null;
+        this.left = null;
+        this.right = null;
+    }
+    set(value) {
+        if (this.value) {
+            if (value.id_almacen < this.value.id_almacen) {
+                this.setLeft(value);
+            } else {
+                this.setRight(value);
+            }
+        }
+        else {
+            this.value = value;
+        }
+    }
+    setLeft(value) {
+        if (this.left) {
+            this.left.set(value);
+        } else {
+            this.left = new Tree();
+            this.left.set(value);
+        }
+    }
+    setRight(value) {
+        if (this.right) {
+            this.right.set(value);
+        } else {
+            this.right = new Tree();
+            this.right.set(value);
+        }
+    }
+}
+
+function Inorder(tree) { //raiz, luego izquierdo y al ultimo derecho
+    if (tree.left) {
+        Inorder(tree.left);
+    }
+    console.log(tree.value.nombre);
+    if (tree.right) {
+        Inorder(tree.right);
+    }
+}
+
+function Busqueda(tree, value) {
+
+    if (value < tree.value.nombre) {
+        Busqueda(tree.left, value)
+    }
+    else if (value > tree.value.nombre) {
+        Busqueda(tree.right, value)
+    }
+    else if (value == tree.value.nombre) {
+        console.log(tree.value.almacen);
+    }
+}
 
 // Rutas para APIS INICIO ----------------------------------------------------------------
 /*
@@ -102,37 +173,42 @@ app.get('/login_api', (req, res) => {
     console.log(password)
     // && matricula = ${matricula} && contrasena = ${password}"
     connection.query(`SELECT * FROM usuarios WHERE nombre = "${nombre}" && matricula = ${matricula} && contrasena = ${password};`, async (error, results) => {
-        console.log('Entro')
+        
         //console.log(results[0])
         if (results.length > 0) {
             console.log('verdadero')
-            res.send({ redirect: results })
+            //res.send({ redirect: results })
+            res.send({"status": true})
+            
         } else {
             console.log('falso')
-            res.send({ redirect: { "results": "" } });
+            res.send({"status": false})
+            
+            //res.send({ redirect: { "results": "" } });
         }
     })
 });
 
-app.get('/registro_api', (req, res) => {
+app.post('/registro_api', (req, res) => {
 
     const nombre = req.query.nombre
     const matricula = req.query.matricula
     const pass = req.query.contrasena
 
     connection.query(`INSERT INTO usuarios(nombre, matricula, contrasena) VALUES ("${nombre}", ${matricula}, ${pass});`, async (error, results) => {
-
+        
         if (error == null) {
             console.log('verdadero')
             res.send({ "status": true })
         } else {
             console.log('falso')
-            res.send({ redirect: { "results": "" } });
+            res.send({"status": false})
+            //res.send({ redirect: { "results": "" } });
         }
     })
 });
 
-app.get('/anadir_api', (req, res)=>{
+app.post('/anadir_api', (req, res)=>{
     const nombre = req.query.nombre
     const cantidad = req.query.cantidad
     const precio = req.query.precio
@@ -149,20 +225,71 @@ app.get('/anadir_api', (req, res)=>{
     })
 })
 
-app.get('/eliminar_api', (req, res)=>{
+app.delete('/eliminar_api', (req, res)=>{
     console.log('Soy el metodo eliminar')
     const nombre = req.query.nombre
     const cantidad = req.query.cantidad
-    const precio = req.query.precio
-    const marca = req.query.marca
     console.log(nombre)
     console.log(cantidad)
     connection.query(`DELETE FROM almacen WHERE nombre = "${nombre}" && cantidad = ${cantidad};`, async (error, results)=>{
-        if(error == null){
+        console.log(results.affectedRows)
+        if(results.affectedRows > 0){
             res.send({"status": true})
         }else{
             res.send({"status": false})
         }
+    })
+})
+
+app.post('/visualizar_api', (req, res)=>{
+    console.log('Consumo el servicio')
+    let arreglo = new Array;
+    let peso;
+    connection.query(`SELECT * FROM almacen;`, async (error, results)=>{
+        arreglo = results
+        peso = arreglo.length
+        console.log(peso)
+        for(let i = 0; i < peso; i++){
+            //arbol.insert(arreglo[i].cantidad);
+            let cantidad = arreglo[i].cantidad
+            arbol.insert(cantidad)
+        }
+        console.log(arbol.root)
+        res.send({"arreglo": arreglo, "peso": peso, "arbol": arbol});
+    })
+})
+
+/*
+app.get('/visualizar_api', (req, res)=>{
+    connection.query('SELECT * FROM almacen;', (err, results) =>{
+        console.log('Soy el metodo 1')
+        res.render(__dirname + '/vistas/visualizar',{
+            almacen: results
+        })
+    })
+
+})
+*/
+app.post('/busqueda', (req, res) => {
+    console.log('Usando el metodo 2')
+    const busqueda =  connection.query.buscar;
+    const tree = new Tree ();
+
+    connection.query('SELECT * FROM almacen ORDER BY almacen.nombre ASC;', (err, results) => {
+
+        for (i = 0; i < results.length; i++) {
+            tree.set(results[i]);
+        }
+
+    })
+
+    connection.query('SELECT * FROM almacen WHERE id_almacen = ?;', [busqueda_id], (err, results) => {
+        res.render('ver', {
+            login: true,
+            almacen: results,
+            insession: req.session.usuario
+        });
+
     })
 })
 

@@ -6,26 +6,26 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/publico/css/registro.css">
+  <link rel="icon" href="/publico/imagenes/inicio/carita-f.svg">
   <title>Registro</title>
 </head>
 
 <body>
   <div class="contenedor">
     <img src="/publico/imagenes/registro/logotipo.png" class="avatar" alt="Avatar Image">
-    <h1>Registros</h1>
+    <h1>REGISTRO</h1>
     <form>
       <!-- INPUT  NOMBRE DE USUARIO-->
       <label for="username">Nombre de usuario</label>
-      <input type="text" placeholder="Ingrese Nombre de usuario" name="user" id="nombre" required>
+      <input type="text" placeholder="Ingrese nombre de usuario" name="user" id="nombre" required>
 
       <label for="username">Matricula</label>
-      <input type="text" placeholder="Ingrese la Matricula que deseas tener" name="matricula" id="matricula" required>
+      <input type="text" placeholder="Ingrese la matricula" name="matricula" id="matricula" required>
 
       <!-- INPUT CONTRASEÑA -->
       <label for="password">Contraseña</label>
-      <input type="number" placeholder="Ingrese Contraseña" name="pass" id="pass" required>
-      <input type="button" onclick="registro()">
-      <a href="#" onclick="prueba()">Olvidaste tu contraseña?</a>
+      <input type="password" placeholder="Ingrese contraseña" name="pass" id="pass" required>
+      <input type="button" onclick="registro()" value="Registrarse">
     </form>
   </div>
 </body>
@@ -50,7 +50,7 @@
     }
     
     fetch(`${url}registro_api?nombre=${nombre}&&matricula=${matricula}&&contrasena=${pass}`, {
-      method: 'GET'
+      method: 'POST'
     })
       .then(res => res.json()
       )
@@ -58,12 +58,15 @@
         const status = response["status"];
 
         if (status) {
+          alert('Entro')
           window.location = '/menu'
         }else{
+          alert('Entro')
           window.location = '/'
         }
       })
       .catch(function (error) {
+        alert('Entro error')
         console.log(error)
         window.location = '/registro'
       })

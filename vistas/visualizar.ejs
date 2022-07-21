@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/publico/css/visualizar.css">
+  <title>Document</title>
+</head>
+
+<body background="pink">
+  <div class="table-container">
+    <table class="table">
+            <tr class="tr-head">
+                <th class="column-fixed">id_almacen</th>
+                <th class="column-margin">nombre</th>
+               
+                <th >cantidad</th>
+                <th >precio</th>
+                <th >marca</th>
+            </tr>   
+    </table>
+</div>
+</body>
+<script>
+  function visualizar() {
+    const url = "http://localhost:3000/";
+    fetch(`${url}visualizar_api?`, {
+      method: 'POST'
+    })
+      .then(res => res.json()
+      )
+      .then(response => {
+        const arbol = response['arbol']
+        const arreglo = response['arreglo']
+        const peso = response['peso']
+        alert(peso)
+        let arregloF = new Array;
+        for (let i = 0; i < peso; i++) {
+          arregloF[i] = JSON.stringify(response.arreglo[i])
+          let productoG = JSON.stringify(response.arreglo[i].productoG)
+          let producto = JSON.stringify(response.arreglo[i].nombre)
+          let cantidad = JSON.stringify(response.arreglo[i].cantidad)
+          //alert(productoG)
+          //alert(arregloF[i])
+          //alert(producto)
+          //alert(cantidad)
+        }
+
+
+
+        alert(JSON.stringify(response.arbol))
+        //alert('JSON')
+        //alert(arbol)
+        //alert('Son todos los productos')
+      })
+      .catch(function (error) {
+        alert('Falla en el sistema')
+        console.log(error)
+      })
+  }
+  visualizar();
+</script>
+
+</html>

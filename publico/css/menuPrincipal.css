@@ -1,11 +1,12 @@
 * {
     margin: 0;
-    padding: 0;
+    padding: 0px;
     box-sizing: border-box;
 }
 
 body {
-    background-color: bisque;
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgb(244, 176, 205) 0%, rgb(249, 224, 179) 100%);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -79,7 +80,7 @@ img:hover {
     justify-content: center;
     flex-direction: column;
     border-radius: 0 16px 16px 0;
-    background-color: rgb(227, 98, 98);
+    background-color: rgb(228, 129, 129);
 }
 
 .list_item {

@@ -5,12 +5,21 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/publico/css/registro.css">
+  <link rel="stylesheet" href="/publico/css/login.css">
+  <link rel="stylesheet" href="/publico/css/login2.css">
+  <link rel="icon" href="/publico/imagenes/inicio/flor.svg">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <title>Login</title>
 </head>
 <body>
+  <div class="carga" id="carga">
+    <div class="contenedor_mensaje">
+        <p class="mensaje">Presione cualquier tecla para continuar...</p>
+    </div>
+    <div class="preloader"></div>
+</div>
+<div class="main" id="main" style="display: none;">
   <div class="contenedor">
-    <div class="-xs-10 col-sm-4 col-md-6">
       <img src="/publico/imagenes/login/logotipOf.png" class="avatar" alt="Avatar Image">
       <h1>Inicio de Sesión</h1>
         <!-- INPUT  NOMBRE DE USUARIO-->
@@ -27,14 +36,45 @@
     <label for="nombre" id="nombre" name="nombre"></label>
     <label for="contra" id="contra" name="contra"></label>
   </div>
-
+</div><div class="modal" tabindex="-1" role="dialog" id="modalMensaje">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title badge badge-success">MENSAJE</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="mensaje"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">SALIR</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 <script>
+const ventanaCarga = document.getElementById('carga');
+const ventanaPrincipal = document.getElementById('main');
+
+function reveal (){
+    ventanaPrincipal.style.display='block';
+    ventanaCarga.style.display='none';
+}
+function ready(){
+    document.body.addEventListener('keydown',reveal);
+}setTimeout(ready,1000);
   function registro() {
     setTimeout(function () {
       window.location = '/registro'
-    }, 5000)
+    }, 3000)
   }
 
   function login() {
@@ -57,6 +97,25 @@
       .then(res => res.json()
       )
       .then(response => {
+        const status = response["status"];
+        if(status){
+            MENSAJE = "ACCESO CORRECTO ..!!";
+            $("#mensaje").html(MENSAJE);
+            $("#modalMensaje").modal('show');
+          
+        setTimeout(function conRetraso(){
+          window.location = '/menu'
+        },3000);
+          
+        }else{
+            MENSAJE = "ACCESO INCORRECTO ..!!";
+            $("#mensaje").html(MENSAJE);
+            $("#modalMensaje").modal('show');
+          setTimeout(function conRetraso(){
+          window.location = '/login'
+        },3000);
+        }
+        /*
         if (JSON.stringify(response.redirect != null && response.redirect != undefined)) {
            document.querySelector('#nombre').innerHTML = JSON.stringify(response.redirect[0].nombre)
            document.querySelector('#contra').innerHTML = JSON.stringify(response.redirect[0].matricula)
@@ -65,7 +124,7 @@
         } else {
           document.querySelector('#nombre').innerHTML = "No hay datos";
           window.location = '/'
-        }
+        }*/
       })
       .catch(function (error) {
         console.log(error)

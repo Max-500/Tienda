@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/publico/css/eliminar.css">
+  <link rel="icon" href="/publico/imagenes/inicio/eliminar.svg">
   <title>Eliminar productos</title>
 </head>
 
@@ -50,7 +51,7 @@
     if (nombre != "" && cantidad != "" && precio != "" && marca != "") {
       alert('Entro')
       fetch(`${url}eliminar_api?nombre=${nombre}&&cantidad=${cantidad}&&precio=${precio}&&marca=${marca}`, {
-        method: 'GET'
+        method: 'DELETE'
       })
         .then(res => res.json()
         )
@@ -59,7 +60,7 @@
 
           if (status) {
             alert('Se elimino perfectamente')
-            window.location = '/menuP'
+            window.location = '/menu'
           } else {
             alert('No se pudo realizar la eliminacion')
             window.location = '/eliminar'
