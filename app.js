@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const arbol = require('./arbol');
+const producto = require('./arbol')
 
 //
 const bodyParser = require('body-parser');
@@ -76,6 +77,10 @@ app.get('/menuP', async (req, res) => {
 */
 app.get('/menuEjemplo', async (req, res) => {
     res.render(__dirname + '/vistas/menuP')
+})
+
+app.get('/tablas', async (req, res) => {
+    res.render(__dirname + '/vistas/tablas')
 })
 
 app.get('/visualizar', async (req, res) => {

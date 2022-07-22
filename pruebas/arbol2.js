@@ -18,7 +18,7 @@ class Node {
 
 class BynarySearchTree {
 
-    constructor(data) {
+    constructor() {
         this.root = null;
     }
 
@@ -26,17 +26,21 @@ class BynarySearchTree {
         return this.root;
     }
 
-    insert(data) {
-        let newNode = new Node(data);
+    insert(nombre, cantidad, precio, marca) {
+        let newNode = new Node(nombre, cantidad, precio, marca);
         if (this.root == null) {
             this.root = newNode;
-            //console.log(this.root)
         } else {
             this.insertNode(this.root, newNode);
         }
     }
 
     insertNode(node, newNode) {
+        console.log(node)
+        console.log(newNode)
+        
+        node.deepEqual();
+
         if (newNode.root < node.root) {
             if (node.left == null) {
                 node.left = newNode
@@ -54,6 +58,10 @@ class BynarySearchTree {
                 }
             }
         }
+    }
+
+    compareTo(){
+        
     }
 
     inOrder(node) {
@@ -156,65 +164,13 @@ class BynarySearchTree {
 
 }
 
-class Tree {
-    constructor() {
-        this.value = null;
-        this.left = null;
-        this.right = null;
-    }
-    set(value) {
-        if (this.value) {
-            if (value.id_mascota < this.value.id_mascota) {
-                this.setLeft(value);
-            } else {
-                this.setRight(value);
-            }
-        }
-        else {
-            this.value = value;
-        }
-    }
-    setLeft(value) {
-        if (this.left) {
-            this.left.set(value);
-        } else {
-            this.left = new Tree();
-            this.left.set(value);
-        }
-    }
-    setRight(value) {
-        if (this.right) {
-            this.right.set(value);
-        } else {
-            this.right = new Tree();
-            this.right.set(value);
-        }
-    }
-}
-
-function Inorder(tree) { //raiz, luego izquierdo y al ultimo derecho
-    if (tree.left) {
-        Inorder(tree.left);
-    }
-    console.log(tree.value.nombre);
-    if (tree.right) {
-        Inorder(tree.right);
-    }
-}
-
-function Busqueda(tree, value) {
-    if (value < tree.value.nombre) {
-        Busqueda(tree.left, value)
-    }
-    else if (value > tree.value.nombre) {
-        Busqueda(tree.right, value)
-    }
-    else if (value == tree.value.nombre) {
-        console.log(tree.value.mascota);
-    }
-}
-
 let arbol = new BynarySearchTree;
-let producto = new Producto;
-module.exports = arbol;
-module.exports = producto;
+//let producto = new Node('Takis', 450, 14, 'Barcel');
+arbol.insert('Gansito', 450, 19, 'Marinela')
+arbol.insert('Gansito', 550, 19, 'Marinela')
+//console.log(arbol.root)
+//console.log('--------------------------')
+//const root = arbol.getRoot();
+//console.log(root)
+//console.log('-----------------------------------------')
+//console.log(arbol.search(root, producto))

@@ -67,7 +67,7 @@ body {
     background: transparent;
     outline: none;
     height: 40px;
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-size: 16px;
     opacity: 1;
   }
@@ -84,7 +84,7 @@ body {
   
   .contenedor input[type="button"]:hover {
     cursor: pointer;
-    background: #fc9610;
+    background: rgb(203, 68, 142);
     color: #000;
     opacity: 1;
   }
@@ -99,6 +99,6 @@ body {
   }
   
   .contenedor a:hover {
-    color: #fff;
+    color: rgb(0, 0, 0);
     opacity: 1;
   }

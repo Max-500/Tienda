@@ -1,0 +1,54 @@
+
+<div id="dinamic"></div>
+<script>
+    // Constantes para el div contenedor de los inputs y el botón de agregar
+const contenedor = document.querySelector('#dinamic');
+const btnAgregar = document.querySelector('#agregar');
+
+// Variable para el total de elementos agregados
+let total = 1;
+const agg = ['precio','cantidad','marca'];
+ /**
+ * Método que se ejecuta cuando se da clic al botón de agregar elementos
+ */
+function agregarDatos (agg){
+    alert('entro a la funcion');
+    for (let index = 0; index < agg.length; index++) {
+        let div = document.createElement('div');
+    div.innerHTML = `<label>${agg[index]}</label> - <input type="text" name="nombre[]" placeholder="Nombre" required><button onclick="eliminar(this)">Eliminar</button>`;
+    contenedor.appendChild(div);
+    }
+    
+}
+while (!agg.isEmpty()) {
+    agregarDatos();
+}
+agregarDatos(agg);
+function isEmpty(agg) {
+for (i = 0; i < agg.length; agg[i++] = null) /* sentencia vacía */ ;
+alert(agg);   
+}
+
+isEmpty();
+
+/**
+ * Método para eliminar el div contenedor del input
+ * @param {this} e 
+ */
+const eliminar = (e) => {
+    const divPadre = e.parentNode;
+    contenedor.removeChild(divPadre);
+    actualizarContador();
+};
+
+/**
+ * Método para actualizar el contador de los elementos agregados
+*/
+const actualizarContador = () => {
+    let divs = contenedor.children;
+    total = 1;
+    for (let i = 0; i < divs.length; i++) {
+        divs[i].children[0].innerHTML = total++;
+    }//end for
+};
+</script>
