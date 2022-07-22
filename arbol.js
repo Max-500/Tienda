@@ -15,10 +15,6 @@ class Node {
     }
 }
 
-
-{}
-
-
 class BynarySearchTree {
 
     constructor(data) {
