@@ -12,17 +12,17 @@
 
 <body background="pink">
   <div class="table-container">
-    <table class="table">
-            <tr class="tr-head">
-                <th class="column-fixed">id_almacen</th>
-                <th class="column-margin">nombre</th>
-               
-                <th >cantidad</th>
-                <th >precio</th>
-                <th >marca</th>
-            </tr>   
+    <table class="table" id="table">
+      <tr class="tr-head">
+        <th class="column-fixed">id_almacen</th>
+        <th class="column-margin">nombre</th>
+
+        <th>cantidad</th>
+        <th>precio</th>
+        <th>marca</th>
+      </tr>
     </table>
-</div>
+  </div>
 </body>
 <script>
   function visualizar() {
@@ -33,28 +33,30 @@
       .then(res => res.json()
       )
       .then(response => {
-        const arbol = response['arbol']
-        const arreglo = response['arreglo']
-        const peso = response['peso']
-        alert(peso)
-        let arregloF = new Array;
+        const peso = response["peso"]
+        const results = response["resultados"]
         for (let i = 0; i < peso; i++) {
-          arregloF[i] = JSON.stringify(response.arreglo[i])
-          let productoG = JSON.stringify(response.arreglo[i].productoG)
-          let producto = JSON.stringify(response.arreglo[i].nombre)
-          let cantidad = JSON.stringify(response.arreglo[i].cantidad)
-          //alert(productoG)
-          //alert(arregloF[i])
-          //alert(producto)
-          //alert(cantidad)
+          alert(results[i].id_almacen)
+          alert(results[i].nombre)
+          alert(results[i].cantidad)
+          alert(results[i].precio)
+          alert(results[i].marca)
         }
+        let tupla = document.getElementById('table').insertRow(0)
+        for (let i = 0; i < peso; i++) {
+          let col1 = tupla.insertCell(0);
+          let col2 = tupla.insertCell(1)
+          let col3 = tupla.insertCell(2)
+          let col4 = tupla.insertCell(3)
+          let col5 = tupla.insertCell(4)
 
-
-
-        alert(JSON.stringify(response.arbol))
-        //alert('JSON')
-        //alert(arbol)
-        //alert('Son todos los productos')
+          col1.innerHTML = results[i].id_almacen
+          col2.innerHTML = results[i].nombre
+          col3.innerHTML = results[i].cantidad
+          col4.innerHTML = results[i].precio
+          col5.innerHTML = results[i].marca
+        }
+        //insertar(peso);
       })
       .catch(function (error) {
         alert('Falla en el sistema')

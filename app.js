@@ -246,7 +246,7 @@ app.delete('/eliminar_api', (req, res)=>{
     })
 })
 
-app.post('/visualizar_api', (req, res)=>{
+/*app.post('/visualizar_api', (req, res)=>{
     console.log('Consumo el servicio')
     let arreglo = new Array;
     let peso;
@@ -263,18 +263,21 @@ app.post('/visualizar_api', (req, res)=>{
         res.send({"arreglo": arreglo, "peso": peso, "arbol": arbol});
     })
 })
-
-/*
-app.get('/visualizar_api', (req, res)=>{
-    connection.query('SELECT * FROM almacen;', (err, results) =>{
-        console.log('Soy el metodo 1')
-        res.render(__dirname + '/vistas/visualizar',{
-            almacen: results
-        })
-    })
-
-})
 */
+
+app.post('/visualizar_api', (req, res)=>{
+    console.log('Consumo el servicio')
+    let arreglo = new Array;
+    let peso;
+    connection.query(`SELECT * FROM almacen;`, async (error, results)=>{
+        arreglo = results
+        peso = arreglo.length
+        console.log(peso)
+        //res.send({"arreglo": arreglo, "peso": peso, "resultados":results});
+        res.send({"peso": peso, "resultados":results});
+    })
+})
+
 app.post('/busqueda', (req, res) => {
     console.log('Usando el metodo 2')
     const busqueda =  connection.query.buscar;
