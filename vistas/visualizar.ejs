@@ -5,26 +5,56 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="/publico/css/visualizar.css">
-  <title>Document</title>
+  <title>Visualizar</title>
 </head>
-
-<body background="pink">
-  <div class="table-container">
-    <table class="table" id="table">
-      <tr class="tr-head">
-        <th class="column-fixed">id_almacen</th>
-        <th class="column-margin">nombre</th>
-
-        <th>cantidad</th>
-        <th>precio</th>
-        <th>marca</th>
-      </tr>
-    </table>
-  </div>
-</body>
 <script>
+  function doSearch() {
+    const tableReg = document.getElementById('table');
+    const searchText = document.getElementById('searchTerm').value.toLowerCase();
+    let total = 0;
+
+    // Recorremos todas las filas con contenido de la tabla
+    for (let i = 1; i < tableReg.rows.length; i++) {
+      // Si el td tiene la clase "noSearch" no se busca en su cntenido
+      if (tableReg.rows[i].classList.contains("noSearch")) {
+        continue;
+      }
+
+      let found = false;
+      const cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+      // Recorremos todas las celdas
+      for (let j = 0; j < cellsOfRow.length && !found; j++) {
+        const compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+        // Buscamos el texto en el contenido de la celda
+        if (searchText.length == 0 || compareWith.indexOf(searchText) > -1) {
+          found = true;
+          total++;
+        }
+      }
+      if (found) {
+        tableReg.rows[i].style.display = '';
+      } else {
+        // si no ha encontrado ninguna coincidencia, esconde la
+        // fila de la tabla
+        tableReg.rows[i].style.display = 'none';
+      }
+    }
+
+    // mostramos las coincidencias
+    const lastTR = tableReg.rows[tableReg.rows.length - 1];
+    const td = lastTR.querySelector("td");
+    lastTR.classList.remove("hide", "red");
+    if (searchText == "") {
+      lastTR.classList.add("hide");
+    } else if (total) {
+      td.innerHTML = "Se ha encontrado " + total + " coincidencia" + ((total > 1) ? "s" : "");
+    } else {
+      lastTR.classList.add("red");
+      td.innerHTML = "No se han encontrado coincidencias";
+    }
+  }
+
   function visualizar() {
     const url = "http://localhost:3000/";
     fetch(`${url}visualizar_api?`, {
@@ -35,16 +65,10 @@
       .then(response => {
         const peso = response["peso"]
         const results = response["resultados"]
+
         for (let i = 0; i < peso; i++) {
-          alert(results[i].id_almacen)
-          alert(results[i].nombre)
-          alert(results[i].cantidad)
-          alert(results[i].precio)
-          alert(results[i].marca)
-        }
-        let tupla = document.getElementById('table').insertRow(0)
-        for (let i = 0; i < peso; i++) {
-          let col1 = tupla.insertCell(0);
+          let tupla = document.getElementById('table').insertRow(1)
+          let col1 = tupla.insertCell(0)
           let col2 = tupla.insertCell(1)
           let col3 = tupla.insertCell(2)
           let col4 = tupla.insertCell(3)
@@ -65,5 +89,33 @@
   }
   visualizar();
 </script>
+
+<body>
+  <h1>Buscar en el contenido de una tabla</h1>
+  <form>
+    Cadena a buscar <input id="searchTerm" type="text" onkeyup="doSearch()" />
+  </form>
+  <p>
+
+  <div class="table-container">
+    <form>
+      <table class="table" id="table">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Marcas</th>
+        </tr>
+        <tr class='noSearch hide'>
+          <td colspan="5"></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <a href="/menu">
+    <button name="volver" type="button" id="back-menu">REGRESAR A MENU</button>
+  </a>
+</body>
 
 </html>
