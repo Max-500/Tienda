@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es-mx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturacion</title>
+    <link rel="stylesheet" href="Facturar.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="jsPDF-1.3.2/dist/jspdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script src="fact1.js"></script>
+</head>
+
+
+<body class="contenedor">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h3>Formulario</h3>
+                <hr>
+                <form id="form">
+                    <div class="mb-3">
+                        <label for="curso" class="form-label">Turno</label>
+                        <select class="form-select" id="curso">
+                            <option value="">Seleccione una opción</option>
+                            <option value="Matutino">Matutino</option>
+                            <option value="Vespertino">Vespertino </option>
+                        </select>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="nombre" class="form-label">Nombres</label>
+                            <input type="text" class="form-control" id="nombre">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="apellido" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="apellido">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo electronico</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="direccion" class="form-label">Direccion</label>
+                            <input type="text" class="form-control" id="direccion">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="telefono" class="form-label">Telefono</label>
+                            <input type="text" class="form-control" id="telefono">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <div>
+                                <label for="" class="form-label">Carne</label>
+                                <div class="form-check form-check">
+                                    <input type="radio" name="carne" class="form-check-input" id="carne-si" value="1">
+                                    <label for="carne-si" class="form-check-label">Si</label>
+                                </div>
+                                <div class="form-check form-check">
+                                    <input type="radio" name="carne" class="form-check-input" id="carne-no" value="0"
+                                        checked>
+                                    <label for="carne-no" class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <label for="CARNES" class="form-label">Cuantos ?</label>
+                                <input type="text" name="CARNES" id="CARNES" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <div>
+                                <label for="" class="form-label">Lacteos</label>
+                                <div class="form-check form-check">
+                                    <input type="radio" name="lacteos" class="form-check-input" id="lacteos-si" value="1">
+                                    <label for="lacteos-si" class="form-check-label">Si</label>
+                                </div>
+                                <div class="form-check form-check">
+                                    <input type="radio" name="lacteos" class="form-check-input" id="lacteos-no" value="0"
+                                        checked>
+                                    <label for="lacteos-no" class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <label for="LACTEOS" class="form-label">Cuantos ?</label>
+                                <input type="text" name="CARNES" id="LACTEOS" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <div>
+                                <label for="" class="form-label">Miscelaneos</label>
+                                <div class="form-check form-check">
+                                    <input type="radio" name="miscelaneos" class="form-check-input" id="miscelaneos-si" value="1">
+                                    <label for="miscelaneos-si" class="form-check-label">Si</label>
+                                </div>
+                                <div class="form-check form-check">
+                                    <input type="radio" name="miscelaneos" class="form-check-input" id="miscelaneos-no" value="0"
+                                        checked>
+                                    <label for="miscelaneos-no" class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <label for="MISCELANEOS" class="form-label">Cuantos ?</label>
+                                <input type="text" name="MISCELANEOS" id="MISCELANEOS" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <div>
+                                <label for="" class="form-label">Harinas</label>
+                                <div class="form-check form-check">
+                                    <input type="radio" name="harinas" class="form-check-input" id="harinas-si" value="1">
+                                    <label for="harinas-si" class="form-check-label">Si</label>
+                                </div>
+                                <div class="form-check form-check">
+                                    <input type="radio" name="harinas" class="form-check-input" id="harinas-no" value="0"
+                                        checked>
+                                    <label for="harinas-no" class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <label for="HARINAS" class="form-label">Cuantos ?</label>
+                                <input type="text" name="HARINAS" id="HARINAS" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <span class="d-block pb-2">Firma digital aqui</span>
+                    <div class="signature mb-2" style="width: 100%; height: 200px;">
+                        <canvas id="signature-canvas"
+                            style="border: 1px dashed rgb(111, 72, 209); width: 100%; height: 200px;"></canvas>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mb-4">Generar PDF</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

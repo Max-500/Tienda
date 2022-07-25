@@ -58,23 +58,20 @@ app.get('/anadir', async (req, res) => {
 app.get('/eliminar', async (req, res) => {
     res.render(__dirname + '/vistas/eliminar')
 })
-
+/*
 app.get('/facturar', async (req, res) => {
     res.render(__dirname + '/vistas/facturar')
 })
+*/
 
-app.get('/factura2', async (req, res) => {
-    res.render(__dirname + '/vistas/factura2')
+app.get('/facturar', async (req, res) => {
+    res.render(__dirname + '/vistas/FacturarOficial/Facturar')
 })
 
 app.get('/nosotros', async (req, res) => {
     res.render(__dirname + '/vistas/nosotros')
 })
-/*
-app.get('/menuP', async (req, res) => {
-    res.render(__dirname + '/vistas/menuPrincipal')
-})
-*/
+
 app.get('/menuEjemplo', async (req, res) => {
     res.render(__dirname + '/vistas/menuP')
 })
@@ -89,69 +86,8 @@ app.get('/visualizar', async (req, res) => {
 
 // Rutas para VISTAS FIN ----------------------------------------------------------------
 
-
-class Tree {
-    constructor() {
-        this.value = null;
-        this.left = null;
-        this.right = null;
-    }
-    set(value) {
-        if (this.value) {
-            if (value.id_almacen < this.value.id_almacen) {
-                this.setLeft(value);
-            } else {
-                this.setRight(value);
-            }
-        }
-        else {
-            this.value = value;
-        }
-    }
-    setLeft(value) {
-        if (this.left) {
-            this.left.set(value);
-        } else {
-            this.left = new Tree();
-            this.left.set(value);
-        }
-    }
-    setRight(value) {
-        if (this.right) {
-            this.right.set(value);
-        } else {
-            this.right = new Tree();
-            this.right.set(value);
-        }
-    }
-}
-
-function Inorder(tree) { //raiz, luego izquierdo y al ultimo derecho
-    if (tree.left) {
-        Inorder(tree.left);
-    }
-    console.log(tree.value.nombre);
-    if (tree.right) {
-        Inorder(tree.right);
-    }
-}
-
-function Busqueda(tree, value) {
-
-    if (value < tree.value.nombre) {
-        Busqueda(tree.left, value)
-    }
-    else if (value > tree.value.nombre) {
-        Busqueda(tree.right, value)
-    }
-    else if (value == tree.value.nombre) {
-        console.log(tree.value.almacen);
-    }
-}
-
 // Rutas para APIS INICIO ----------------------------------------------------------------
-/*
-*/
+
 app.get('/menuP_api', (req, res) => {
     const nombre = req.query.nombre
     const matricula = req.query.matricula
@@ -176,20 +112,15 @@ app.get('/login_api', (req, res) => {
     console.log(nombre)
     console.log(matricula)
     console.log(password)
-    // && matricula = ${matricula} && contrasena = ${password}"
     connection.query(`SELECT * FROM usuarios WHERE nombre = "${nombre}" && matricula = ${matricula} && contrasena = ${password};`, async (error, results) => {
-        
-        //console.log(results[0])
+
         if (results.length > 0) {
             console.log('verdadero')
-            //res.send({ redirect: results })
             res.send({"status": true})
             
         } else {
             console.log('falso')
             res.send({"status": false})
-            
-            //res.send({ redirect: { "results": "" } });
         }
     })
 });
@@ -208,7 +139,6 @@ app.post('/registro_api', (req, res) => {
         } else {
             console.log('falso')
             res.send({"status": false})
-            //res.send({ redirect: { "results": "" } });
         }
     })
 });
@@ -245,25 +175,6 @@ app.delete('/eliminar_api', (req, res)=>{
         }
     })
 })
-
-/*app.post('/visualizar_api', (req, res)=>{
-    console.log('Consumo el servicio')
-    let arreglo = new Array;
-    let peso;
-    connection.query(`SELECT * FROM almacen;`, async (error, results)=>{
-        arreglo = results
-        peso = arreglo.length
-        console.log(peso)
-        for(let i = 0; i < peso; i++){
-            //arbol.insert(arreglo[i].cantidad);
-            let cantidad = arreglo[i].cantidad
-            arbol.insert(cantidad)
-        }
-        console.log(arbol.root)
-        res.send({"arreglo": arreglo, "peso": peso, "arbol": arbol});
-    })
-})
-*/
 
 app.post('/visualizar_api', (req, res)=>{
     console.log('Consumo el servicio')
