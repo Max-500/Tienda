@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/publico/css/eliminar.css">
   <link rel="icon" href="/publico/imagenes/inicio/eliminar.svg">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <title>Eliminar productos</title>
 </head>
 
@@ -41,15 +42,34 @@
   </div>
 </body>
 <script>
+
+  function mostrarMal() {
+    //la equis sale con 'error'
+    swal({
+      title: 'No se pudo realizar la eliminacion!!',
+      text: 'Asegurate de que todos los campos esten completos',
+      icon: 'error',
+      button: ['']
+    });
+  }
+
+  function mostrarBien() {
+    //la equis sale con 'error'
+    swal({
+      title: 'Producto Eliminado!',
+      text: 'Bien hecho',
+      icon: 'success',
+      button: ['']
+    });
+  }
+
   function eliminar() {
-    alert('Soy el metodo eliminar')
     const url = "http://localhost:3000/";
     let nombre = document.getElementById('nombre').value
     let cantidad = document.getElementById('cantidad').value
     let precio = document.getElementById('precio').value
     let marca = document.getElementById('marca').value
     if (nombre != "" && cantidad != "" && precio != "" && marca != "") {
-      alert('Entro')
       fetch(`${url}eliminar_api?nombre=${nombre}&&cantidad=${cantidad}&&precio=${precio}&&marca=${marca}`, {
         method: 'DELETE'
       })
@@ -59,11 +79,15 @@
           const status = response["status"];
 
           if (status) {
-            alert('Se elimino perfectamente')
-            window.location = '/menu'
+            mostrarBien();
+            setTimeout(function conRetraso() {
+              window.location = '/eliminar'
+            }, 2000);
           } else {
-            alert('No se pudo realizar la eliminacion')
-            window.location = '/eliminar'
+            mostrarMal();
+            setTimeout(function conRetraso() {
+              window.location = '/eliminar'
+            }, 2000);
           }
         })
         .catch(function (error) {
@@ -71,7 +95,15 @@
           console.log(error)
         })
     } else {
-      alert('No has ingresado datos')
+      swal({
+        title: 'Error',
+        text: 'No has ingresado datos!!',
+        icon: 'error',
+        buttons: ['']
+      });
+      setTimeout(function conRetraso() {
+        window.location = '/eliminar'
+      }, 2000);
     }
   }  
 </script>

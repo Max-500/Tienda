@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/publico/css/anadir.css">
   <link rel="icon" href="/publico/imagenes/inicio/añadir.svg">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <title>Añadir productos</title>
 </head>
 
@@ -56,11 +57,25 @@
         const status = response["status"];
 
         if (status) {
-          alert('Se realizo perfectamente')
-          window.location = '/menu'
-        }else{
-          alert('No se pudo realizar el registro')
+          swal({
+            title: 'Se realizo perfectamente!',
+            text: 'producto añadido',
+            icon: 'success',
+            buttons: ['']
+          });
+          setTimeout(function conRetraso(){
           window.location = '/anadir'
+        },2000);
+        }else{
+          swal({
+            title: 'Error',
+            text: 'No se pudo añadir!!',
+            icon: 'error',
+            buttons: ['']
+          });
+          setTimeout(function conRetraso(){
+          window.location = '/anadir'
+        },2000);
         }
       })
       .catch(function (error) {
@@ -68,8 +83,15 @@
         console.log(error)
       })
     }else{
-      alert('No has ingresado datos')
-      window.location = '/menu'
+      swal({
+            title: 'Error',
+            text: 'No has ingresado datos!!',
+            icon: 'error',
+            buttons: ['']
+          });
+          setTimeout(function conRetraso(){
+          window.location = '/anadir'
+        },2000);
     }
   }
 </script>

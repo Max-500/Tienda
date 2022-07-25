@@ -189,29 +189,6 @@ app.post('/visualizar_api', (req, res)=>{
     })
 })
 
-app.post('/busqueda', (req, res) => {
-    console.log('Usando el metodo 2')
-    const busqueda =  connection.query.buscar;
-    const tree = new Tree ();
-
-    connection.query('SELECT * FROM almacen ORDER BY almacen.nombre ASC;', (err, results) => {
-
-        for (i = 0; i < results.length; i++) {
-            tree.set(results[i]);
-        }
-
-    })
-
-    connection.query('SELECT * FROM almacen WHERE id_almacen = ?;', [busqueda_id], (err, results) => {
-        res.render('ver', {
-            login: true,
-            almacen: results,
-            insession: req.session.usuario
-        });
-
-    })
-})
-
 // Rutas para APIS FINAL ----------------------------------------------------------------
 
 app.listen(3000, (req, res) => {
