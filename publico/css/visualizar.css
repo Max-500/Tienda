@@ -1,0 +1,115 @@
+@property --rotate {
+    syntax: "<angle>";
+    initial-value: 132deg;
+    inherits: false;
+}
+
+:root {
+    --table-height: auto;
+    --table-width: calc(var(--table-height) / 1.5);
+}
+
+
+body {
+    min-height: 97vh;
+    background: rgba(0, 0, 0, 0.15) url(https://i.pinimg.com/originals/1d/4b/36/1d4b36ed161c892f7556dd8bc8424231.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+}
+
+
+.table {
+    background: rgba(25, 28, 41, 0.5);
+    width: var(--table-width);
+    height: var(--table-height);
+    padding: 3px;
+    position: relative;
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    font-size: 1.3em;
+    color: rgb(0, 0, 0);
+    font-family: cursive;
+}
+
+.table:hover {
+    color: rgb(88 199 250 / 100%);
+    transition: color 1s;
+}
+
+.table::before {
+    content: "";
+    width: 104%;
+    height: 102%;
+    border-radius: 8px;
+    background-image: linear-gradient(var(--rotate), #b464db, #7287c8 43%, #49e795);
+    position: absolute;
+    z-index: -1;
+    top: -1%;
+    left: -2%;
+    animation: spin 2.5s linear infinite;
+}
+
+.table::after {
+    position: absolute;
+    content: "";
+    top: calc(var(--table-height) / 6);
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    transform: scale(0.8);
+    filter: blur(calc(var(--table-height) / 6));
+    background-image: linear-gradient(var(--rotate), #b464db, #7287c8 43%, #49e795);
+    opacity: 1;
+    transition: opacity .5s;
+    animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        --rotate: 0deg;
+    }
+
+    100% {
+        --rotate: 360deg;
+    }
+}
+
+a {
+    color: #212534;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin-top: 2rem;
+}
+
+.table td{
+    padding: 50px;
+}
+
+.table tr{
+    text-align: center;
+}
+
+#back-menu{
+    background: #191c29;    
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+}

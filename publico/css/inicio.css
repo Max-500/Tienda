@@ -1,0 +1,75 @@
+html, body{
+    padding: 10;
+    margin: 10;
+    font-family: sans-serif;
+    height: 100%;
+    animation:  fadeIn 3000ms;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    width: 1500px;
+    padding: 10px 0px 0px 0px;
+    text-align: center;
+    background: #bc4e9c;
+    height: 100px;
+    justify-content: center;
+}
+
+h1 {
+    color: white;
+}
+
+h2 {
+    text-align: center;
+    color: #642a73;
+    margin: 15px 0px 15px 0px;
+}
+
+main {
+    width: 1500px;
+    height: 570px;
+}
+
+.contenedorP{
+    display: flex;
+    flex-direction: row;
+    width: 1500px;
+    height: 500px;
+}
+
+.imagen {
+    height: 400px;
+    width: 750px;
+    background: url(/publico/imagenes/inicio/calidad-aprobado.jpg) no-repeat;
+    display: flex;
+    background-position: center;
+}
+
+.textos {
+    display: flex;
+    height: 500px;
+    width: 750px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+p {
+    text-align: justify;
+}
+
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

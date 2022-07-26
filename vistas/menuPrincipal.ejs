@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal</title>
+    <link rel="stylesheet" href="/publico/css/menuPrincipal.css">
+    <link rel="icon" href="/publico/imagenes/menu/menuu.svg">
+</head>
+
+<body>
+    <div class="container">
+
+        <nav class="nav">
+            <ul class="list">
+
+                <li class="list_item">
+                    <div class="list_button">
+                        <img src="/publico/imagenes/menu/flecha.svg">
+                        <a class="nav_link"> Inicio </a>
+                    </div>
+                </li>
+
+                <li class="list_item list_item--click">
+                    <div class="list_button list_button--click">
+                        <img src="/publico/imagenes/menu/menu.svg" class="list_img">
+                        <a href="#" class="nav_link"> Menú </a>
+                        <img src="/publico/imagenes/menu/flecha.svg" class="list_flecha">
+                    </div>
+
+                    <ul class="list_show">
+                        <li class="list_inside">
+                            <a href="/anadir" class="nav_link nav_link--inside">Añadir productos</a>
+                        </li>
+
+                        <li class="list_inside">
+                            <a href="/eliminar" class="nav_link nav_link--inside">Eliminar productos</a>
+                        </li>
+
+                        <li class="list_inside">
+                            <a href="/facturar" class="nav_link nav_link--inside">Facturar</a>
+                        </li>
+                        <li class="list_inside">
+                            <a href="/visualizar" class="nav_link nav_link--inside">visualizar</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="list_item">
+                    <div class="list_button">
+                        <img src="/publico/imagenes/menu/nosotros.svg">
+                        <a href="/nosotros" class="nav_link"> Nosotros</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div class="centro">
+
+            <div>
+                <center>
+                    <h1>BIENVENIDOS</h1>
+                    <h2>Gracias por confiar en nosotros</h2>
+                    <h3>Cada vez somos más los que hacemos el cambio</h3>
+                </center>
+            </div>
+
+            <div class="img-form">
+                <img src="/publico/imagenes/menu/agranel.jpg">
+            </div>
+
+            <div class="img-form">
+                <img src="/publico/imagenes/menu/productos.jpg">
+            </div>
+
+            <div class="img-form">
+                <img src="/publico/imagenes/menu/SEÑOR.jpg">
+            </div>
+
+            <div class="img-form">
+                <img src="/publico/imagenes/menu/SEÑORA.jpg">
+            </div>
+
+            <div class="img-form">
+                <img src="/publico/imagenes/menu/prod3.jpg">
+            </div>
+
+            <div class="img-form">
+                <img src="/publico/imagenes/menu/prod4.jpg">
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let listaElementos = document.querySelectorAll('.list_button--click'); //seleciono los elementos con esa clase
+
+    listaElementos.forEach(listaElementos => {
+        listaElementos.addEventListener('click', () => {
+            listaElementos.classList.toggle('arrow'); //agrega y quita la clase nueva cuando se toca
+
+            let height = 0;
+            let menu = listaElementos.nextElementSibling; //tomar al hermano adyacente de list_elemento
+
+            if (menu.clientHeight == "0") { // SI EL ALTO DEL MENU ES= 0
+
+                //la variabñe height cambia al alto mininmo que debe tener menu para existir
+                height = menu.scrollHeight;
+            }
+
+            menu.style.height = height + "px";
+        })
+    });
+</script>
+
+</html>

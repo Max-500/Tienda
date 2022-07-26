@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es-mx">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/publico/css/registro.css">
+  <link rel="icon" href="/publico/imagenes/inicio/carita-f.svg">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <title>Registro</title>
+</head>
+
+<body>
+  <div class="contenedor">
+    <img src="/publico/imagenes/registro/logotipo.png" class="avatar" alt="Avatar Image">
+    <h1>REGISTRO</h1>
+    <form>
+      <!-- INPUT  NOMBRE DE USUARIO-->
+      <label for="username">Nombre de usuario</label>
+      <input type="text" placeholder="Ingrese nombre de usuario" name="user" id="nombre" required>
+
+      <label for="username">Matricula</label>
+      <input type="text" placeholder="Ingrese la matricula" name="matricula" id="matricula" required>
+
+      <!-- INPUT CONTRASEÑA -->
+      <label for="password">Contraseña</label>
+      <input type="password" placeholder="Ingrese contraseña" name="pass" id="pass" required>
+      <input type="button" onclick="registro()" value="Registrarse">
+    </form>
+  </div>
+</body>
+<script>
+  function mostrarMal() {
+    //la equis sale con 'error'
+    swal({
+      title: 'Registro Incorrecto!!',
+      text: 'Asegurate de que todos los campos esten completos',
+      icon: 'error',
+      button: ['']
+    });
+  }
+
+  function mostrarBien() {
+    //la equis sale con 'error'
+    swal({
+      title: 'Registro Exitoso!',
+      text: 'Bien hecho',
+      icon: 'success',
+      button: ['']
+    });
+  }
+
+  function prueba() {
+    alert('Mensaje Provisional');
+  }
+  function registro() {
+    const url = "http://localhost:3000/";
+
+    let nombre = document.getElementById('nombre').value;
+    if (nombre == "") {
+      nombre = "L"
+    }
+    let matricula = document.getElementById('matricula').value;
+    if (matricula == "") {
+      matricula = 1
+    }
+    let pass = document.getElementById('pass').value;
+    if (pass == "") {
+      pass = 1
+    }
+
+    fetch(`${url}registro_api?nombre=${nombre}&&matricula=${matricula}&&contrasena=${pass}`, {
+      method: 'POST'
+    })
+      .then(res => res.json()
+      )
+      .then(response => {
+        const status = response["status"];
+
+        if (status) {
+          mostrarBien();
+          setTimeout(function conRetraso() {
+            window.location = '/login'
+          }, 2000);
+        } else {
+          mostrarMal();
+          setTimeout(function conRetraso() {
+            window.location = '/registro'
+          }, 2000);
+        }
+      })
+      .catch(function (error) {
+        alert('Entro error')
+        console.log(error)
+        window.location = '/registro'
+      })
+  }
+</script>
+
+</html>

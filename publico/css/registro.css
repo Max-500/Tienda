@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: url(/publico/imagenes/login/bg.jpeg) no-repeat center top;
+    background: url(/publico/imagenes/login/pexels-miguel-á-padriñán-255379.jpg) no-repeat center top;
     background-size: cover;
     font-family: sans-serif;
     height: 100vh;
@@ -9,13 +9,15 @@ body {
   
   h1 {
     margin: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
   
   .contenedor {
     width: 320px;
-    height: 420px;
-    background: #000;
-    color: #fff;
+    height: 500px;
+    background: rgb(242, 246, 245);
+    color: #d79ccd;
+    border: #000;
     top: 50%;
     left: 50%;
     border-radius: 15px;
@@ -65,25 +67,24 @@ body {
     background: transparent;
     outline: none;
     height: 40px;
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-size: 16px;
     opacity: 1;
   }
   
-  .contenedor input[type="submit"] {
+  .contenedor input[type="button"] {
     border: none;
     outline: none;
     height: 35px;
-    background: #F50B02;
-    color: #fff;
+    color: rgb(203, 68, 142);
     font-size: 18px;
     border-radius: 20px;
     opacity: 1;
   }
   
-  .contenedor input[type="submit"]:hover {
+  .contenedor input[type="button"]:hover {
     cursor: pointer;
-    background: #fc9610;
+    background: rgb(203, 68, 142);
     color: #000;
     opacity: 1;
   }
@@ -98,6 +99,6 @@ body {
   }
   
   .contenedor a:hover {
-    color: #fff;
+    color: rgb(0, 0, 0);
     opacity: 1;
   }
