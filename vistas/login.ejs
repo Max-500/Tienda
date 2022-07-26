@@ -96,18 +96,10 @@
   function login() {
     const url = "http://localhost:3000/";
     let nombre = document.getElementById('nombre').value;
-    if (nombre == "") {
-      nombre = "L"
-    }
     let matricula = document.getElementById('matricula').value;
-    if (matricula == "") {
-      matricula = 1
-    }
     let pass = document.getElementById('password').value;
-    if (pass == "") {
-      pass = 1
-    }
-    fetch(`${url}login_api?nombre=${nombre}&&matricula=${matricula}&&contrasena=${pass}`, {
+    if(nombre != "" && matricula != "" && pass != ""){
+      fetch(`${url}login_api?nombre=${nombre}&&matricula=${matricula}&&contrasena=${pass}`, {
       method: 'GET'
     })
       .then(res => res.json()
@@ -130,6 +122,17 @@
         console.log(error)
         window.location = '/'
       })
+    }else{
+      swal({
+            title: 'Error',
+            text: 'No has ingresado datos!!',
+            icon: 'error',
+            buttons: ['']
+          });
+          setTimeout(function conRetraso(){
+          window.location = '/login'
+        },2000);
+    }
   }
 </script>
 
