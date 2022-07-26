@@ -8,9 +8,8 @@ class Producto {
 }
 
 class Node {
-    constructor(nombre, cantidad, precio, marca) {
-        let newProduct = new Producto(nombre, cantidad, precio, marca);
-        this.root = newProduct;
+    constructor(data) {
+        this.root = data;
         this.left = null;
         this.right = null;
     }
@@ -99,18 +98,14 @@ class BynarySearchTree {
 
         if (node.root === data) {
             // eliminamos
-            console.log('Antes de eliminar: ' + node);
             node = this.deleteNode(node); // -> devuelve la misma estructura con el nodo eliminado
         } else if (data < node.root) {
             // nos movemos a la izquierda
-            console.log('Nodo izquierdo: ' + node)
             node.left = this.delete(node.left, data);
         } else if (data > node.root) {
             // derecha
-            console.log('Node derecho: ' + node)
             node.right = this.delete(node.right, data);
         }
-
         return node;
     }
 
@@ -156,65 +151,6 @@ class BynarySearchTree {
 
 }
 
-class Tree {
-    constructor() {
-        this.value = null;
-        this.left = null;
-        this.right = null;
-    }
-    set(value) {
-        if (this.value) {
-            if (value.id_mascota < this.value.id_mascota) {
-                this.setLeft(value);
-            } else {
-                this.setRight(value);
-            }
-        }
-        else {
-            this.value = value;
-        }
-    }
-    setLeft(value) {
-        if (this.left) {
-            this.left.set(value);
-        } else {
-            this.left = new Tree();
-            this.left.set(value);
-        }
-    }
-    setRight(value) {
-        if (this.right) {
-            this.right.set(value);
-        } else {
-            this.right = new Tree();
-            this.right.set(value);
-        }
-    }
-}
-
-function Inorder(tree) { //raiz, luego izquierdo y al ultimo derecho
-    if (tree.left) {
-        Inorder(tree.left);
-    }
-    console.log(tree.value.nombre);
-    if (tree.right) {
-        Inorder(tree.right);
-    }
-}
-
-function Busqueda(tree, value) {
-    if (value < tree.value.nombre) {
-        Busqueda(tree.left, value)
-    }
-    else if (value > tree.value.nombre) {
-        Busqueda(tree.right, value)
-    }
-    else if (value == tree.value.nombre) {
-        console.log(tree.value.mascota);
-    }
-}
-
 let arbol = new BynarySearchTree;
-let producto = new Producto;
-module.exports = arbol;
-module.exports = producto;
+arbol.insert(10)
+console.log(arbol)
