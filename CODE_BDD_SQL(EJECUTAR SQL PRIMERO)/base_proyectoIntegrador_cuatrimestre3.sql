@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS abarrotes_Ideal;
+CREATE DATABASE IF NOT EXISTS abarrotes_ideal;
 
-USE abarrotes_Ideal;
+USE abarrotes_ideal;
 
 CREATE TABLE IF NOT EXISTS usuarios(
 	id_usuario INT AUTO_INCREMENT,

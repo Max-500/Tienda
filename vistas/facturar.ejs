@@ -6,274 +6,73 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facturacion</title>
-    <link rel="stylesheet" href="/publico/css/facturar.css">
+    <link rel="stylesheet" href="##">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="jsPDF-1.3.2/dist/jspdf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+
+    <script src="fact1.js"></script>
 </head>
 
+<body>
+    <div class="container mt-5">
 
-<body class="contenedor">
-    <div class="container mt-4">
         <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <h3>Formulario</h3>
-                <hr>
-                <form id="form">
-                    <div class="mb-3">
-                        <label for="curso" class="form-label">Turno</label>
-                        <select class="form-select" id="curso">
-                            <option value="">Seleccione una opción</option>
-                            <option value="Matutino">Matutino</option>
-                            <option value="Vespertino">Vespertino </option>
-                        </select>
-                    </div>
+            <div class="col-8 offset-2">
+                <form id="formulario" class="p-3 mt-5 shadow border">
+                    <h2 class="text-center text-primary">REPORTE MENSUAL</h2>
+                    <label for="nombre">Nombres trabajador</label>
+                    <input id="nombre" class="form-control my-2" type="text" placeholder="Ingrese nombres">
+                    
+                    <label for="apellido">Apellidos trabajador</label>
+                    <input id="apellido" class="form-control my-2" type="text" placeholder="Ingrese apellidos">
 
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="nombre" class="form-label">Nombres</label>
-                            <input type="text" class="form-control" id="nombre">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="apellido" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="apellido">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo electronico</label>
-                        <input type="email" class="form-control" id="email">
-                    </div>
+                    <label for="turno">Turno</label>
+                    <input id="turno" class="form-control my-2" type="text" placeholder="Turno">
 
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="direccion" class="form-label">Direccion</label>
-                            <input type="text" class="form-control" id="direccion">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="telefono" class="form-label">Telefono</label>
-                            <input type="text" class="form-control" id="telefono">
-                        </div>
-                    </div>
+                    <label for="Especificacion-carnes">Especificacion carnes</label>
+                    <input id="Especificacion-Carnes" class="form-control my-2" type="text" placeholder="Turno">
 
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <div>
-                                <label for="" class="form-label">Carne</label>
-                                <div class="form-check form-check">
-                                    <input type="radio" name="carne" class="form-check-input" id="carne-si" value="1">
-                                    <label for="carne-si" class="form-check-label">Si</label>
-                                </div>
-                                <div class="form-check form-check">
-                                    <input type="radio" name="carne" class="form-check-input" id="carne-no" value="0"
-                                        checked>
-                                    <label for="carne-no" class="form-check-label">No</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div>
-                                <label for="CARNES" class="form-label">Cuantos ?</label>
-                                <input type="text" name="CARNES" id="CARNES" placeholder="">
-                            </div>
-                        </div>
-                    </div>
+                    <label for="lacteos">Especificacion Lacteos</label>
+                    <input id="lacteos" class="form-control my-2" type="text" placeholder="">
 
+                    <label for="Especificacion-Harinas">Especificacion Harinas</label>
+                    <input id="Harinas" class="form-control my-2" type="text" placeholder="">
 
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <div>
-                                <label for="" class="form-label">Lacteos</label>
-                                <div class="form-check form-check">
-                                    <input type="radio" name="lacteos" class="form-check-input" id="lacteos-si"
-                                        value="1">
-                                    <label for="lacteos-si" class="form-check-label">Si</label>
-                                </div>
-                                <div class="form-check form-check">
-                                    <input type="radio" name="lacteos" class="form-check-input" id="lacteos-no"
-                                        value="0" checked>
-                                    <label for="lacteos-no" class="form-check-label">No</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div>
-                                <label for="LACTEOS" class="form-label">Cuantos ?</label>
-                                <input type="text" name="CARNES" id="LACTEOS" placeholder="">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <div>
-                                <label for="" class="form-label">Miscelaneos</label>
-                                <div class="form-check form-check">
-                                    <input type="radio" name="miscelaneos" class="form-check-input" id="miscelaneos-si"
-                                        value="1">
-                                    <label for="miscelaneos-si" class="form-check-label">Si</label>
-                                </div>
-                                <div class="form-check form-check">
-                                    <input type="radio" name="miscelaneos" class="form-check-input" id="miscelaneos-no"
-                                        value="0" checked>
-                                    <label for="miscelaneos-no" class="form-check-label">No</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div>
-                                <label for="MISCELANEOS" class="form-label">Cuantos ?</label>
-                                <input type="text" name="MISCELANEOS" id="MISCELANEOS" placeholder="">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <div>
-                                <label for="" class="form-label">Harinas</label>
-                                <div class="form-check form-check">
-                                    <input type="radio" name="harinas" class="form-check-input" id="harinas-si"
-                                        value="1">
-                                    <label for="harinas-si" class="form-check-label">Si</label>
-                                </div>
-                                <div class="form-check form-check">
-                                    <input type="radio" name="harinas" class="form-check-input" id="harinas-no"
-                                        value="0" checked>
-                                    <label for="harinas-no" class="form-check-label">No</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div>
-                                <label for="HARINAS" class="form-label">Cuantos ?</label>
-                                <input type="text" name="HARINAS" id="HARINAS" placeholder="">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <span class="d-block pb-2">Firma digital aqui</span>
-                    <div class="signature mb-2" style="width: 100%; height: 200px;">
-                        <canvas id="signature-canvas"
-                            style="border: 1px dashed rgb(111, 72, 209); width: 100%; height: 200px;"></canvas>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary mb-4">Generar PDF</button>
+                    <label for="Especificacion-Miscelaneos">Especificacion Miscelaneos</label>
+                    <input id="Miscelaneos" class="form-control my-2" type="text" placeholder="">
+                    <button class="btn btn-primary my-2" type="submit">Mostrar Datos</button>
                 </form>
+                <hr>
+                <div class="nuevo">
+                    <form >
+                <h3 id="respuesta" class="text-center fw-light"></h3>
+                    </form>
+                </div>
+
+                <script>
+                    const formulario = document.querySelector("#formulario");
+                    formulario.addEventListener("submit", validarFormulario)
+
+                    function validarFormulario(e) {
+                        e.preventDefault();
+                        const turno = document.querySelector("#turno").value
+                        const nombre = document.querySelector("#nombre").value;
+                        const apellido = document.querySelector("#apellido").value;
+                        const lacteos = document.querySelector("#lacteos").value;
+                        const carnes = document.querySelector("#Especificacion-Carnes").value;
+                        const harinas = document.querySelector("#Harinas").value;
+                        const Miscelaneos= document.querySelector("#Miscelaneos").value;
+
+                        const respuesta = document.getElementById("respuesta");
+                        respuesta.textContent = "Bienvenido" + "  "+ nombre + "   " +  "   " + apellido + "    " +  "    " +"turno : "+  "            "+ turno + "   "+
+                        "Su registro ha sido generado correctamente" +"   "+"  "+ "CARNES : " + carnes + "        "+
+                        + "     "+   "     "+ "     " + "LACTEOS : " +  lacteos + "     " + "Harinas : " + harinas + "        "+ "Miscelaneos:   " + Miscelaneos;
+                    }
+
+                
+
+
+                </script>
+
             </div>
         </div>
-    </div>
-
 </body>
-<script>
-    function loadImage(url) {
-    return new Promise(resolve => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.responseType = "blob";
-        xhr.onload = function (e) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const res = event.target.result;
-                resolve(res);
-            }
-            const file = this.response;
-            reader.readAsDataURL(file);
-        }
-        xhr.send();
-    });
-}
-
-let signaturePad = null;
-
-window.addEventListener('load', async () => {
-
-    const canvas = document.querySelector("canvas");
-    canvas.height = canvas.offsetHeight;
-    canvas.width = canvas.offsetWidth;
-
-    signaturePad = new SignaturePad(canvas, {});
-
-    const form = document.querySelector('#form');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        let curso = document.getElementById('curso').value;
-        let nombres = document.getElementById('nombre').value;
-        let apellidos = document.getElementById('apellido').value;
-        let email = document.getElementById('email').value;
-        let direccion = document.getElementById('direccion').value;
-        let telefono = document.getElementById('telefono').value;
-        let carne = document.querySelector('input[name="carne"]:checked').value;
-        let CARNES = document.getElementById('CARNES').value;
-        let lacteos = document.querySelector('input[name="lacteos"]:checked').value;
-        let LACTEOS = document.getElementById('LACTEOS').value;
-        let harinas = document.querySelector('input[name="harinas"]:checked').value;
-        let HARINAS = document.getElementById('HARINAS').value;
-        let miscelaneos = document.querySelector('input[name="miscelaneos"]:checked').value;
-        let MISCELANEOS = document.getElementById('MISCELANEOS').value;
-    
-        generatePDF(curso, nombres, apellidos, email, direccion, telefono, lacteos, LACTEOS, carne, CARNES, harinas, HARINAS, miscelaneos, MISCELANEOS);
-    })
-
-});
-
-async function generatePDF(curso, nombres, apellidos, email, direccion, telefono, lacteos, LACTEOS, carne, CARNES, harinas, HARINAS, miscelaneos, MISCELANEOS) {
-    const image = await loadImage("/publico/imagenes/facturar/formulario.jpg");
-    const signatureImage = signaturePad.toDataURL();
-
-    const pdf = new jsPDF('p', 'pt', 'letter');
-
-    pdf.addImage(image, 'PNG', 0, 0, 565, 792);
-    pdf.addImage(signatureImage, 'PNG', 200, 605, 300, 60);
-
-    pdf.setFontSize(12);
-    pdf.text(curso, 260, 125);
-
-    const date = new Date();
-    pdf.text(date.getUTCDate().toString(), 235, 150);
-    pdf.text((date.getUTCMonth() + 1).toString(), 275, 150);
-    pdf.text(date.getUTCFullYear().toString(), 320, 150);
-
-    pdf.setFontSize(10);
-    pdf.text(nombres, 170, 213);
-    pdf.text(apellidos, 170, 200);
-    pdf.text(direccion, 170, 400);
-    pdf.text(telefono, 170, 456);
-    pdf.text(email, 170, 475);
-
-    pdf.setFillColor(0,0,0);
-
-    if (parseInt(carne) === 0) {
-        pdf.circle(255, 374, 4, 'FD');
-    } else {
-        pdf.circle(190, 374, 4, 'FD');
-        pdf.text(CARNES.toString(), 355, 378);
-    }
-
-    if (parseInt(lacteos) === 0) {
-        pdf.circle(255, 374, 4, 'FD');
-    } else {
-        pdf.circle(190, 354, 4, 'FD');
-        pdf.text(LACTEOS.toString(), 350, 359);
-    }
-
-    if (parseInt(harinas) === 0) {
-        pdf.circle(255, 374, 4, 'FD');
-    } else {
-        pdf.circle(190, 334, 4, 'FD');
-        pdf.text(HARINAS.toString(), 350, 345);
-    }
-
-    if (parseInt(miscelaneos) === 0) {
-        pdf.circle(255, 374, 4, 'FD');
-    } else {
-        pdf.circle(190, 314, 4, 'FD');
-        pdf.text(MISCELANEOS.toString(), 350, 322);
-    }
-
-    pdf.save("example.pdf");
-
-}
-</script>
-</html>

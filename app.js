@@ -65,7 +65,7 @@ app.get('/facturar', async (req, res) => {
 */
 
 app.get('/facturar', async (req, res) => {
-    res.render(__dirname + '/vistas/FacturarOficial/Facturar')
+    res.render(__dirname + '/vistas/facturar')
 })
 
 app.get('/nosotros', async (req, res) => {
@@ -74,10 +74,6 @@ app.get('/nosotros', async (req, res) => {
 
 app.get('/menuEjemplo', async (req, res) => {
     res.render(__dirname + '/vistas/menuP')
-})
-
-app.get('/tablas', async (req, res) => {
-    res.render(__dirname + '/vistas/tablas')
 })
 
 app.get('/visualizar', async (req, res) => {
