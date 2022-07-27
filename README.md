@@ -6,6 +6,7 @@ se debe de ejecutar en MySQL Workbench.
 
 Paso 2 - Instalar los paquetes de NodeJS
 Ejecutar el comando "npm install"
+Ejecutar el comando "npm install express"
 
 Paso 3 - Ejecutar Codigo
 Ejecuta el comando node app.js
