@@ -152,5 +152,16 @@ class BynarySearchTree {
 }
 
 let arbol = new BynarySearchTree;
-arbol.insert(10)
+console.log('Insertando datos dentro del arbol')
+arbol.insert(10);
+arbol.insert(15);
+arbol.insert(5);
+console.log('Imprimiendo el arobl antes de eliminar')
 console.log(arbol)
+let root = arbol.getRoot();
+console.log('Metodo de Busqueda del Arbol')
+console.log(arbol.search(root, 10));
+console.log('Metodo de Eliminar del arbol')
+arbol.delete(root, 15);
+console.log('Imprimedo el arbol despues de eliminar')
+console.log(arbol);

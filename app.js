@@ -73,7 +73,6 @@ app.get('/visualizar', async (req, res) => {
 // Rutas para APIS INICIO ----------------------------------------------------------------
 
 app.get('/login_api', (req, res) => {
-    console.log('Soy el metodo login')
     const nombre = req.query.nombre
     const matricula = req.query.matricula
     const password = req.query.contrasena
@@ -108,7 +107,6 @@ app.post('/anadir_api', (req, res)=>{
         if(results.length > 0){
             res.send({"status": false})
         }else{
-            console.log('Entro')
             connection.query(`INSERT INTO almacen(nombre, cantidad, precio, marca) VALUES ("${nombre}", ${cantidad}, ${precio}, "${marca}");`, async (err, resultados)=>{
                 res.send({"status": true})
             })
@@ -121,7 +119,6 @@ app.delete('/eliminar_api', (req, res)=>{
     const nombre = req.query.nombre
     const cantidad = req.query.cantidad
     connection.query(`DELETE FROM almacen WHERE nombre = "${nombre}" && cantidad = ${cantidad};`, async (error, results)=>{
-        console.log(results.affectedRows)
         if(results.affectedRows > 0){
             res.send({"status": true})
         }else{
@@ -131,7 +128,6 @@ app.delete('/eliminar_api', (req, res)=>{
 })
 
 app.post('/visualizar_api', (req, res)=>{
-    console.log('Consumo el servicio')
     let arreglo = new Array;
     let peso;
     connection.query(`SELECT * FROM almacen;`, async (error, results)=>{
