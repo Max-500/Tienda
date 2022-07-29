@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <link rel="stylesheet" href="/publico/css/login.css">
   <link rel="stylesheet" href="/publico/css/login2.css">
   <link rel="icon" href="/publico/imagenes/inicio/flor.svg">
@@ -33,8 +32,16 @@
       <!-- INPUT CONTRASEÑA   onclick="login()"-->
       <label for="password">Contraseña</label>
       <input type="password" placeholder="Ingrese contraseña" name="password" id="password" required>
-      <input type="button" value="Ingresar" onclick="login()">
-      <input type="button" value="Registrarse" onclick="registro()">
+      <label for="clase-trabajador" name="clase-trabajador" id="clase-trabajador" required>Tipo Trabajador</label>
+      <select name="clase-trabajador" id="select" required>
+        <option value="1" selected hidden aria-required="true">Seleccione una opción</option>
+        <option value="Empleado">Empleado</option>
+        <option value="Administrador">Administrador</option>
+      </select>
+      <div class="botones">
+        <input type="button" value="Ingresar" onclick="login()">
+      </div>
+
     </div>
     <label for="nombre" id="nombre" name="nombre"></label>
     <label for="contra" id="contra" name="contra"></label>
@@ -51,7 +58,7 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
 </body>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
   const ventanaCarga = document.getElementById('carga');
   const ventanaPrincipal = document.getElementById('main');
@@ -98,19 +105,28 @@
     let nombre = document.getElementById('nombre').value;
     let matricula = document.getElementById('matricula').value;
     let pass = document.getElementById('password').value;
-    if (nombre != "" && matricula != "" && pass != "") {
-      fetch(`${url}login_api?nombre=${nombre}&&matricula=${matricula}&&contrasena=${pass}`, {
+    let tipo = document.getElementById('select').value;
+    if (nombre != "" && matricula != "" && pass != "" && tipo != "1") {
+      fetch(`${url}login_api?nombre=${nombre}&&matricula=${matricula}&&contrasena=${pass}&&tipo=${tipo}`, {
         method: 'GET'
       })
         .then(res => res.json()
         )
         .then(response => {
           const status = response["status"];
+          const tipo = response["tipo"]
           if (status) {
-            mostrarBien();
-            setTimeout(function conRetraso() {
-              window.location = '/menu'
-            }, 2000);
+            if (tipo == "Administrador") {
+              mostrarBien();
+              setTimeout(function conRetraso() {
+                window.location = '/menuAdministrador'
+              }, 2000);
+            } else {
+              mostrarBien();
+              setTimeout(function conRetraso() {
+                window.location = '/menu'
+              }, 2000);
+            }
           } else {
             mostrarMal();
             setTimeout(function conRetraso() {

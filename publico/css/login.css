@@ -48,6 +48,10 @@ body {
     border-radius: 50%;
     animation: girar 1s infinite ease-in;
   }
+
+  .botones{
+    margin-top: 25px;
+  }
   
   .mensaje_cargando{
     position: absolute;
@@ -89,7 +93,7 @@ body {
   
   .contenedor {
     width: 320px;
-    height: 420px;
+    height: 500px;
     background: rgb(206, 201, 205);
     color: rgb(7, 7, 7);
     top: 50%;
@@ -100,7 +104,12 @@ body {
     box-sizing: border-box;
     padding: 70px 30px;
   }
+
+  #clase-trabajador{
+    padding: 10px;
+  }
   
+ 
   .contenedor .avatar {
     width: 100px;
     height: 100px;

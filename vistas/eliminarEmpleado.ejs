@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es-mx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/publico/css/eliminarEmpleado.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <title>Eliminar Usuario</title>
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="container">
+            <h3>Complete los campos necesarios con información del trabajador</h3>
+
+            <input type="text" class="cajas-texto" id="usuario" name="usuario" placeholder="Ingrese nombres"
+                autocomplete="off" autofocus>
+
+            <input type="text" class="cajas-texto" id="matricula" name="pass" placeholder="Ingrese matricula"
+                autocomplete="off" autofocus>
+
+            <input type="password" class="cajas-texto" id="password" placeholder="Ingrese contraseña" autocomplete="off"
+                autofocus>
+
+            <input type="button" value="Eliminar" onclick="eliminar()">
+            <a href="/menuAdministrador">
+                <input type="button" value="Regresar">
+            </a>
+            </form>
+
+        </div>
+    </div>
+</body>
+<script>
+    function mostrarMal() {
+        swal({
+            title: 'Registro Incorrecto!!',
+            text: 'Asegurate de que todos los campos esten completos',
+            icon: 'error',
+            button: ['']
+        });
+    }
+
+    function mostrarBien() {
+        swal({
+            title: 'Registro Exitoso!',
+            text: 'Bien hecho',
+            icon: 'success',
+            button: ['']
+        });
+    }
+
+    function eliminar() {
+        const url = "http://localhost:3000/";
+        let nombre = document.getElementById('usuario').value;
+        let matricula = document.getElementById('matricula').value
+        let password = document.getElementById('password').value
+        if (nombre != "" && matricula != "" && password != "") {
+            fetch(`${url}eliminar_empleado_api?nombre=${nombre}&&matricula=${matricula}&&password=${password}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json()
+                )
+                .then(response => {
+                    const status = response["status"];
+                    if (status) {
+                        mostrarBien();
+                        setTimeout(function conRetraso() {
+                            window.location = '/menuAdministrador'
+                        }, 2000);
+                    } else {
+                        mostrarMal();
+                        setTimeout(function conRetraso() {
+                            window.location = '/eliminarempleado'
+                        }, 2000);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                    window.location = '/eliminarempleado'
+                })
+        } else {
+            mostrarMal();
+        }
+    }
+</script>
+
+</html>

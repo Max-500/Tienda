@@ -32,7 +32,7 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/registro', async (req, res) => {
-    res.render(__dirname + '/vistas/registro')
+    res.render(__dirname + '/vistas/registroEmpleado')
 })
 
 
@@ -60,12 +60,42 @@ app.get('/nosotros', async (req, res) => {
     res.render(__dirname + '/vistas/nosotros')
 })
 
-app.get('/menuEjemplo', async (req, res) => {
-    res.render(__dirname + '/vistas/menuP')
-})
-
 app.get('/visualizar', async (req, res) => {
     res.render(__dirname + '/vistas/visualizar')
+})
+//
+app.get('/eliminarempleado', async (req, res) => {
+    res.render(__dirname + '/vistas/eliminarEmpleado')
+})
+
+app.get('/agregarempleado', async (req, res) => {
+    res.render(__dirname + '/vistas/agregarEmpleado')
+})
+
+app.get('/historial', async (req, res) => {
+    res.render(__dirname + '/vistas/historial')
+})
+
+// Rutas para Administrador
+
+app.get('/menuAdministrador', async (req, res) => {
+    res.render(__dirname + '/vistas/menuAdmin')
+})
+
+app.get('/anadirAdmin', async (req, res) => {
+    res.render(__dirname + '/vistas/anadirAdmin')
+})
+
+app.get('/eliminarAdmin', async (req, res) => {
+    res.render(__dirname + '/vistas/eliminarAdmin')
+})
+
+app.get('/salir', async (req, res) => {
+    res.render(__dirname + '/vistas/inicio')
+})
+
+app.get('/visualizarAdmin', async (req, res) => {
+    res.render(__dirname + '/vistas/visualizarAdmin')
 })
 
 // Rutas para VISTAS FIN ----------------------------------------------------------------
@@ -76,9 +106,13 @@ app.get('/login_api', (req, res) => {
     const nombre = req.query.nombre
     const matricula = req.query.matricula
     const password = req.query.contrasena
-    connection.query(`SELECT * FROM usuarios WHERE nombre = "${nombre}" && matricula = ${matricula} && contrasena = ${password};`, async (error, results) => {
+    const tipo = req.query.tipo
+    req.session.trabajador = nombre
+    req.session.matricula = matricula
+    req.session.tipoTrabajador = tipo
+    connection.query(`SELECT * FROM usuarios WHERE nombre = "${nombre}" && matricula = ${matricula} && contrasena = ${password} && tipo = "${tipo}";`, async (error, results) => {
         if (results.length > 0) {
-            res.send({"status": true})   
+            res.send({"status": true, "tipo": tipo})   
         } else {
             res.send({"status": false})
         }
@@ -89,7 +123,7 @@ app.get('/registro_api', (req, res) => {
     const nombre = req.query.nombre
     const matricula = req.query.matricula
     const pass = req.query.contrasena
-    connection.query(`INSERT INTO usuarios(nombre, matricula, contrasena) VALUES ("${nombre}", ${matricula}, ${pass});`, async (error, results) => {
+    connection.query(`INSERT INTO usuarios(nombre, tipo, matricula, contrasena) VALUES ("${nombre}", "Empleado",${matricula}, ${pass});`, async (error, results) => {
         if (error == null) {
             res.send({ "status": true })
         } else {
@@ -103,24 +137,43 @@ app.post('/anadir_api', (req, res)=>{
     const cantidad = req.query.cantidad
     const precio = req.query.precio
     const marca = req.query.marca
+
+    const trabajador = req.session.trabajador
+    const matricula = req.session.matricula
+    const tipo = req.session.tipoTrabajador
+
+    const accion = "Agregar"
+    console.log(accion)
     connection.query(`SELECT * FROM almacen wHERE nombre = "${nombre}" && cantidad = ${cantidad};`, async (error, results)=>{
         if(results.length > 0){
             res.send({"status": false})
         }else{
             connection.query(`INSERT INTO almacen(nombre, cantidad, precio, marca) VALUES ("${nombre}", ${cantidad}, ${precio}, "${marca}");`, async (err, resultados)=>{
-                res.send({"status": true})
+                connection.query(`INSERT INTO historial(nombre, matricula, tipo, accion, nombre_producto, cantidad, precio, marca) VALUES ("${trabajador}", ${matricula}, "${tipo}", "${accion}" ,"${nombre}", ${cantidad}, ${precio}, "${marca}");`, async (error, resultados)=>{
+                    res.send({"status": true})
+                })
             })
         }
     })
 })
 
 app.delete('/eliminar_api', (req, res)=>{
-    console.log('Soy el metodo eliminar')
     const nombre = req.query.nombre
     const cantidad = req.query.cantidad
-    connection.query(`DELETE FROM almacen WHERE nombre = "${nombre}" && cantidad = ${cantidad};`, async (error, results)=>{
+    const precio = req.query.precio
+    const marca = req.query.marca
+
+    const trabajador = req.session.trabajador
+    const matricula = req.session.matricula
+    const tipo = req.session.tipoTrabajador
+
+    const accion = "Eliminar"
+
+    connection.query(`DELETE FROM almacen WHERE nombre = "${nombre}" && cantidad = ${cantidad} && precio = ${precio} && marca = "${marca}";`, async (error, results)=>{
         if(results.affectedRows > 0){
-            res.send({"status": true})
+            connection.query(`INSERT INTO historial(nombre, matricula, tipo, accion, nombre_producto, cantidad, precio, marca) VALUES ("${trabajador}", ${matricula}, "${tipo}", "${accion}" ,"${nombre}", ${cantidad}, ${precio}, "${marca}");`, async (error, resultados)=>{
+                res.send({"status": true})
+            })
         }else{
             res.send({"status": false})
         }
@@ -134,6 +187,27 @@ app.post('/visualizar_api', (req, res)=>{
         arreglo = results
         peso = arreglo.length
         res.send({"peso": peso, "resultados":results});
+    })
+})
+
+app.delete('/eliminar_empleado_api', (req, res)=>{
+    console.log('Consumo el servicio eliminar')
+    const nombre = req.query.nombre;
+    const matricula = req.query.matricula
+    const pass = req.query.password
+    connection.query(`SELECT * FROM usuarios WHERE tipo = "Administrador";`, async(error, results)=>{
+        let superPassword = results[0].contrasena;
+        if(pass == superPassword){
+        connection.query(`DELETE FROM usuarios WHERE nombre = "${nombre}" && matricula = ${matricula};`, async(error, results)=>{
+            if(results.affectedRows > 0){
+                res.send({"status": true})
+            }else{
+                res.send({"status": false})
+            }
+        })
+        }else{
+            res.send({"status": false})
+        }
     })
 })
 
