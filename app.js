@@ -15,6 +15,7 @@ app.use('/publico', express.static('publico'));
 app.use('/publico', express.static(__dirname + '/publico'));
 
 app.set('view engine', 'ejs');
+//app.set('view engine', 'html')
 
 const session = require('express-session');
 app.use(session({
@@ -99,6 +100,10 @@ app.get('/visualizarAdmin', async (req, res) => {
 
 app.get('/facturarAdmin', async (req, res) => {
     res.render(__dirname + '/vistas/facturar')
+})
+
+app.get('/google', async (req, res) => {
+    res.render(__dirname + '/facturar.html')
 })
 
 // Rutas para VISTAS FIN ----------------------------------------------------------------
@@ -239,9 +244,11 @@ app.post('/facturar_api', (req, res)=>{
     + producto4 + ': ' + cantidad4, {
         align: 'justify'
     })
-    
-    res.send({'status':true})
+    doc.image('./publico/imagenes/facturar/gracias.jpg',{
+        scale: 2
+    });
     doc.end();
+    res.send({'status':true})
 })
 
 // Rutas para APIS FINAL ----------------------------------------------------------------
