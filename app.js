@@ -26,6 +26,9 @@ app.use(session({
 const connection = require('./BDD/bdd');
 const { name } = require('ejs');
 
+const PDF = require('pdfkit');
+const fs = require('fs');
+
 // Rutas para VISTAS INICIO ----------------------------------------------------------------
 app.get('/', async (req, res) => {
     res.render(__dirname + '/vistas/inicio')
@@ -50,10 +53,6 @@ app.get('/anadir', async (req, res) => {
 
 app.get('/eliminar', async (req, res) => {
     res.render(__dirname + '/vistas/eliminar')
-})
-
-app.get('/facturar', async (req, res) => {
-    res.render(__dirname + '/vistas/facturar')
 })
 
 app.get('/nosotros', async (req, res) => {
@@ -96,6 +95,10 @@ app.get('/salir', async (req, res) => {
 
 app.get('/visualizarAdmin', async (req, res) => {
     res.render(__dirname + '/vistas/visualizarAdmin')
+})
+
+app.get('/facturarAdmin', async (req, res) => {
+    res.render(__dirname + '/vistas/facturar')
 })
 
 // Rutas para VISTAS FIN ----------------------------------------------------------------
@@ -209,6 +212,36 @@ app.delete('/eliminar_empleado_api', (req, res)=>{
             res.send({"status": false})
         }
     })
+})
+
+app.post('/facturar_api', (req, res)=>{
+    let turno = req.query.turno;
+    let nombre = req.query.nombre;
+    let apellido = req.query.apellido
+    let email = req.query.email
+    let direccion = req.query.direccion
+    let telefono = req.query.telefono
+    let producto1 = req.query.producto1
+    let producto2 = req.query.producto2
+    let producto3 = req.query.producto3
+    let producto4 = req.query.producto4
+    let cantidad1 = req.query.cantidad1
+    let cantidad2 = req.query.cantidad2
+    let cantidad3 = req.query.cantidad3
+    let cantidad4 = req.query.cantidad4
+
+    let espacio = '\n'
+
+    var doc = new PDF();
+    doc.pipe(fs.createWriteStream(__dirname + '/factura.pdf'))
+    doc.text('Nombre del Comprador: ' + nombre + ' ' + apellido + espacio + 'Turno: ' + turno + espacio + 'Email: ' + email + espacio + 'Direccion: ' + direccion + espacio 
+    + 'Telefono: ' + telefono + espacio + producto1 + ': ' + cantidad1 + espacio + producto2 + ': ' + cantidad2 + espacio + producto3 + ': ' + cantidad3 + espacio
+    + producto4 + ': ' + cantidad4, {
+        align: 'justify'
+    })
+    
+    res.send({'status':true})
+    doc.end();
 })
 
 // Rutas para APIS FINAL ----------------------------------------------------------------
